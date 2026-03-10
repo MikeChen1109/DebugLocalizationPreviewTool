@@ -6,43 +6,48 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		94B75D632F609AAB0000BA49 /* DebugLocalizationCore in Frameworks */ = {isa = PBXBuildFile; productRef = 94B75D622F609AAB0000BA49 /* DebugLocalizationCore */; };
+		94B75D652F609AAB0000BA49 /* DebugLocalizationTranslationSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 94B75D642F609AAB0000BA49 /* DebugLocalizationTranslationSupport */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		9464507B2F5F665F00F1661D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 946450652F5F665E00F1661D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9464506C2F5F665E00F1661D;
-			remoteInfo = AILocalizationTextPOC;
+			remoteInfo = DebugLocalizationDemo;
 		};
 		946450852F5F665F00F1661D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 946450652F5F665E00F1661D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 9464506C2F5F665E00F1661D;
-			remoteInfo = AILocalizationTextPOC;
+			remoteInfo = DebugLocalizationDemo;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9464506D2F5F665E00F1661D /* AILocalizationTextPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AILocalizationTextPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9464507A2F5F665F00F1661D /* AILocalizationTextPOCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AILocalizationTextPOCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		946450842F5F665F00F1661D /* AILocalizationTextPOCUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AILocalizationTextPOCUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9464506D2F5F665E00F1661D /* DebugLocalizationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DebugLocalizationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9464507A2F5F665F00F1661D /* DebugLocalizationDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebugLocalizationDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		946450842F5F665F00F1661D /* DebugLocalizationDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebugLocalizationDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9464506F2F5F665E00F1661D /* AILocalizationTextPOC */ = {
+		9464506F2F5F665E00F1661D /* DebugLocalizationDemo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AILocalizationTextPOC;
+			path = DebugLocalizationDemo;
 			sourceTree = "<group>";
 		};
-		9464507D2F5F665F00F1661D /* AILocalizationTextPOCTests */ = {
+		9464507D2F5F665F00F1661D /* DebugLocalizationDemoTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AILocalizationTextPOCTests;
+			path = DebugLocalizationDemoTests;
 			sourceTree = "<group>";
 		};
-		946450872F5F665F00F1661D /* AILocalizationTextPOCUITests */ = {
+		946450872F5F665F00F1661D /* DebugLocalizationDemoUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = AILocalizationTextPOCUITests;
+			path = DebugLocalizationDemoUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94B75D632F609AAB0000BA49 /* DebugLocalizationCore in Frameworks */,
+				94B75D652F609AAB0000BA49 /* DebugLocalizationTranslationSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +82,9 @@
 		946450642F5F665E00F1661D = {
 			isa = PBXGroup;
 			children = (
-				9464506F2F5F665E00F1661D /* AILocalizationTextPOC */,
-				9464507D2F5F665F00F1661D /* AILocalizationTextPOCTests */,
-				946450872F5F665F00F1661D /* AILocalizationTextPOCUITests */,
+				9464506F2F5F665E00F1661D /* DebugLocalizationDemo */,
+				9464507D2F5F665F00F1661D /* DebugLocalizationDemoTests */,
+				946450872F5F665F00F1661D /* DebugLocalizationDemoUITests */,
 				9464506E2F5F665E00F1661D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +92,9 @@
 		9464506E2F5F665E00F1661D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9464506D2F5F665E00F1661D /* AILocalizationTextPOC.app */,
-				9464507A2F5F665F00F1661D /* AILocalizationTextPOCTests.xctest */,
-				946450842F5F665F00F1661D /* AILocalizationTextPOCUITests.xctest */,
+				9464506D2F5F665E00F1661D /* DebugLocalizationDemo.app */,
+				9464507A2F5F665F00F1661D /* DebugLocalizationDemoTests.xctest */,
+				946450842F5F665F00F1661D /* DebugLocalizationDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +102,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9464506C2F5F665E00F1661D /* AILocalizationTextPOC */ = {
+		9464506C2F5F665E00F1661D /* DebugLocalizationDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9464508E2F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOC" */;
+			buildConfigurationList = 9464508E2F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemo" */;
 			buildPhases = (
 				946450692F5F665E00F1661D /* Sources */,
 				9464506A2F5F665E00F1661D /* Frameworks */,
@@ -108,18 +115,20 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				9464506F2F5F665E00F1661D /* AILocalizationTextPOC */,
+				9464506F2F5F665E00F1661D /* DebugLocalizationDemo */,
 			);
-			name = AILocalizationTextPOC;
+			name = DebugLocalizationDemo;
 			packageProductDependencies = (
+				94B75D622F609AAB0000BA49 /* DebugLocalizationCore */,
+				94B75D642F609AAB0000BA49 /* DebugLocalizationTranslationSupport */,
 			);
-			productName = AILocalizationTextPOC;
-			productReference = 9464506D2F5F665E00F1661D /* AILocalizationTextPOC.app */;
+			productName = DebugLocalizationDemo;
+			productReference = 9464506D2F5F665E00F1661D /* DebugLocalizationDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		946450792F5F665F00F1661D /* AILocalizationTextPOCTests */ = {
+		946450792F5F665F00F1661D /* DebugLocalizationDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 946450912F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOCTests" */;
+			buildConfigurationList = 946450912F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemoTests" */;
 			buildPhases = (
 				946450762F5F665F00F1661D /* Sources */,
 				946450772F5F665F00F1661D /* Frameworks */,
@@ -131,18 +140,18 @@
 				9464507C2F5F665F00F1661D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				9464507D2F5F665F00F1661D /* AILocalizationTextPOCTests */,
+				9464507D2F5F665F00F1661D /* DebugLocalizationDemoTests */,
 			);
-			name = AILocalizationTextPOCTests;
+			name = DebugLocalizationDemoTests;
 			packageProductDependencies = (
 			);
-			productName = AILocalizationTextPOCTests;
-			productReference = 9464507A2F5F665F00F1661D /* AILocalizationTextPOCTests.xctest */;
+			productName = DebugLocalizationDemoTests;
+			productReference = 9464507A2F5F665F00F1661D /* DebugLocalizationDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		946450832F5F665F00F1661D /* AILocalizationTextPOCUITests */ = {
+		946450832F5F665F00F1661D /* DebugLocalizationDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 946450942F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOCUITests" */;
+			buildConfigurationList = 946450942F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemoUITests" */;
 			buildPhases = (
 				946450802F5F665F00F1661D /* Sources */,
 				946450812F5F665F00F1661D /* Frameworks */,
@@ -154,13 +163,13 @@
 				946450862F5F665F00F1661D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				946450872F5F665F00F1661D /* AILocalizationTextPOCUITests */,
+				946450872F5F665F00F1661D /* DebugLocalizationDemoUITests */,
 			);
-			name = AILocalizationTextPOCUITests;
+			name = DebugLocalizationDemoUITests;
 			packageProductDependencies = (
 			);
-			productName = AILocalizationTextPOCUITests;
-			productReference = 946450842F5F665F00F1661D /* AILocalizationTextPOCUITests.xctest */;
+			productName = DebugLocalizationDemoUITests;
+			productReference = 946450842F5F665F00F1661D /* DebugLocalizationDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -186,7 +195,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 946450682F5F665E00F1661D /* Build configuration list for PBXProject "AILocalizationTextPOC" */;
+			buildConfigurationList = 946450682F5F665E00F1661D /* Build configuration list for PBXProject "DebugLocalizationDemo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -195,14 +204,17 @@
 			);
 			mainGroup = 946450642F5F665E00F1661D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "frameworks/DebugLocalizationPackage" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9464506E2F5F665E00F1661D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9464506C2F5F665E00F1661D /* AILocalizationTextPOC */,
-				946450792F5F665F00F1661D /* AILocalizationTextPOCTests */,
-				946450832F5F665F00F1661D /* AILocalizationTextPOCUITests */,
+				9464506C2F5F665E00F1661D /* DebugLocalizationDemo */,
+				946450792F5F665F00F1661D /* DebugLocalizationDemoTests */,
+				946450832F5F665F00F1661D /* DebugLocalizationDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,12 +270,12 @@
 /* Begin PBXTargetDependency section */
 		9464507C2F5F665F00F1661D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9464506C2F5F665E00F1661D /* AILocalizationTextPOC */;
+			target = 9464506C2F5F665E00F1661D /* DebugLocalizationDemo */;
 			targetProxy = 9464507B2F5F665F00F1661D /* PBXContainerItemProxy */;
 		};
 		946450862F5F665F00F1661D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9464506C2F5F665E00F1661D /* AILocalizationTextPOC */;
+			target = 9464506C2F5F665E00F1661D /* DebugLocalizationDemo */;
 			targetProxy = 946450852F5F665F00F1661D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -322,7 +334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -380,7 +392,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -410,7 +422,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -442,7 +454,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -462,9 +474,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8K3DDFT5E;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOCTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -472,7 +484,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AILocalizationTextPOC.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AILocalizationTextPOC";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DebugLocalizationDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DebugLocalizationDemo";
 			};
 			name = Debug;
 		};
@@ -484,9 +496,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q8K3DDFT5E;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOCTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -494,7 +506,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AILocalizationTextPOC.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AILocalizationTextPOC";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DebugLocalizationDemo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DebugLocalizationDemo";
 			};
 			name = Release;
 		};
@@ -506,7 +518,7 @@
 				DEVELOPMENT_TEAM = Q8K3DDFT5E;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOCUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -514,7 +526,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AILocalizationTextPOC;
+				TEST_TARGET_NAME = DebugLocalizationDemo;
 			};
 			name = Debug;
 		};
@@ -526,7 +538,7 @@
 				DEVELOPMENT_TEAM = Q8K3DDFT5E;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.AILocalizationTextPOCUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mike.chen.DebugLocalizationDemoUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -534,14 +546,14 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AILocalizationTextPOC;
+				TEST_TARGET_NAME = DebugLocalizationDemo;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		946450682F5F665E00F1661D /* Build configuration list for PBXProject "AILocalizationTextPOC" */ = {
+		946450682F5F665E00F1661D /* Build configuration list for PBXProject "DebugLocalizationDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9464508C2F5F665F00F1661D /* Debug */,
@@ -550,7 +562,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9464508E2F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOC" */ = {
+		9464508E2F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9464508F2F5F665F00F1661D /* Debug */,
@@ -559,7 +571,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		946450912F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOCTests" */ = {
+		946450912F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				946450922F5F665F00F1661D /* Debug */,
@@ -568,7 +580,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		946450942F5F665F00F1661D /* Build configuration list for PBXNativeTarget "AILocalizationTextPOCUITests" */ = {
+		946450942F5F665F00F1661D /* Build configuration list for PBXNativeTarget "DebugLocalizationDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				946450952F5F665F00F1661D /* Debug */,
@@ -578,6 +590,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "frameworks/DebugLocalizationPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = frameworks/DebugLocalizationPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94B75D622F609AAB0000BA49 /* DebugLocalizationCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DebugLocalizationCore;
+		};
+		94B75D642F609AAB0000BA49 /* DebugLocalizationTranslationSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DebugLocalizationTranslationSupport;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 946450652F5F665E00F1661D /* Project object */;
 }

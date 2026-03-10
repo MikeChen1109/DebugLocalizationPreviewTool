@@ -1,13 +1,13 @@
 //
-//  AILocalizationTextPOCUITestsLaunchTests.swift
-//  AILocalizationTextPOCUITests
+//  DebugLocalizationDemoUITestsLaunchTests.swift
+//  DebugLocalizationDemoUITests
 //
 //  Created by Mike Chen on 2026/3/10.
 //
 
 import XCTest
 
-final class AILocalizationTextPOCUITestsLaunchTests: XCTestCase {
+final class DebugLocalizationDemoUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

@@ -1,14 +1,14 @@
 //
-//  AILocalizationTextPOCTests.swift
-//  AILocalizationTextPOCTests
+//  DebugLocalizationDemoTests.swift
+//  DebugLocalizationDemoTests
 //
 //  Created by Mike Chen on 2026/3/10.
 //
 
 import XCTest
-@testable import AILocalizationTextPOC
+@testable import DebugLocalizationDemo
 
-final class AILocalizationTextPOCTests: XCTestCase {
+final class DebugLocalizationDemoTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

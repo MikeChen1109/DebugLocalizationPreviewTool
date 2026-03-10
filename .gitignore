@@ -1,0 +1,11 @@
+.DS_Store
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+xcuserdata/
+*.xcuserstate
+
+DebugLocalizationDemo/Products/
+frameworks/DebugLocalizationPackage/.swiftpm/
