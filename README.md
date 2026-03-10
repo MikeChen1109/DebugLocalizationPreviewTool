@@ -1,8 +1,6 @@
 # Debug Localization Preview Tool
 
-Preview localized UI faster during development.
-
-`Debug Localization Preview Tool` is a lightweight iOS debug tool for indie developers and small teams who want to check multi-language UI earlier, before a full localization pipeline is in place.
+This is a lightweight iOS debug tool for indie developers and small teams who want to preview multi-language UI earlier, catch layout issues caused by longer translated text, and validate localization-related UI behavior before a full production localization workflow is ready.
 
 ## Problem
 
