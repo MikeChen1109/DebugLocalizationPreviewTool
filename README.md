@@ -2,23 +2,6 @@
 
 This is a lightweight iOS debug tool for indie developers and small teams who want to preview localized UI faster, reduce manual translation setup during development, and validate how their app behaves across languages before a full production localization workflow is ready.
 
-## Problem
-
-For indie developers and small teams, localization often happens too late. The result is usually predictable:
-
-- translated text is longer than expected
-- layouts break in some languages
-- screens still contain hard-coded strings
-- testing real translated content takes too much manual effort
-
-## Main Value
-
-The main value of this tool is Apple Translation integration for faster localization preview.
-
-Instead of manually preparing translated strings for every screen, you can use Apple Translation to generate preview content more quickly during development. This makes it easier to validate UI, compare language behavior, and reduce repetitive manual translation work.
-
-Alongside that, the package also includes extra providers for testing different scenarios such as pseudo-localization, mock behavior, and passthrough mode.
-
 ## What This Tool Does
 
 - uses Apple Translation for quicker translation preview in supported environments
@@ -119,6 +102,12 @@ If that happens, a practical workaround is:
 
 In practice, managing language packs through the `Translate` app can be more reliable than waiting for the download flow to recover inside your own testing flow.
 
+### Example App
+
+If you want to see how this package is used in practice, check the demo app in:
+
+- `DebugLocalizationDemo/`
+
 ## Built-in Providers
 
 ### `AppleTranslationProvider`
@@ -161,20 +150,6 @@ This adds Apple Translation-based preview support on top of the core workflow.
 
 The split keeps the core debug flow reusable, while translation-specific support stays separate.
 
-## Open Source
+## License
 
-This project is open source and intended for experimentation, learning, and internal debug workflows.
-
-Licensed under the MIT License.
-
-You can:
-
-- use it in your own projects
-- fork and customize it
-- open issues or pull requests
-
-## Repository Layout
-
-- `Package.swift`: root manifest for Swift Package Manager
-- `frameworks/DebugLocalizationPackage/`: package sources and tests
-- `DebugLocalizationDemo/`: demo app for local development
+MIT
