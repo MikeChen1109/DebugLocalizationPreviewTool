@@ -85,13 +85,27 @@ let localizer = configuration.makeLocalizer()
 
 Notes:
 
+- minimum supported version is `iOS 18`
 - this depends on Apple platform availability
 - supported languages depend on the system
 - this is best treated as a debug preview aid, not a complete production translation pipeline
 
-### Language Download Issue
+### Language Packs
 
-When using Apple Translation, language package downloads may sometimes appear stuck or take a very long time.
+Before testing with `AppleTranslationProvider`, it is recommended to download the target language packs first in Apple's built-in `Translate` app.
+
+Recommended setup:
+
+1. Open the built-in `Translate` app on the device.
+2. Go to the app's language management area.
+3. Download the languages you want to test first.
+4. Return to your app and run the preview flow.
+
+This is currently the smoothest setup for developers using the package in their own projects.
+
+### If Downloads Seem Stuck
+
+When using Apple Translation, language package downloads may sometimes appear stuck or take a very long time inside the app flow.
 
 If that happens, a practical workaround is:
 
