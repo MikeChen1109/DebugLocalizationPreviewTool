@@ -165,6 +165,8 @@ The split keeps the core debug flow reusable, while translation-specific support
 
 This project is open source and intended for experimentation, learning, and internal debug workflows.
 
+Licensed under the MIT License.
+
 You can:
 
 - use it in your own projects
