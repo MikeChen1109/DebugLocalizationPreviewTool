@@ -8,6 +8,12 @@ import Translation
 @MainActor
 @Observable
 public final class TranslationPreparationCoordinator {
+    enum PreparationAvailability: Sendable {
+        case installed
+        case supported
+        case unsupported
+    }
+
     public enum State {
         case checking
         case ready
@@ -20,6 +26,10 @@ public final class TranslationPreparationCoordinator {
     public private(set) var downloadStatusMessage: String?
 
     private var currentLanguageIdentifier = ""
+    private let appLanguageIdentifier: () -> String
+    private let preparationResolver: (String) async -> AppleTranslationProvider.Preparation?
+    private let availabilityStatusProvider: (AppleTranslationProvider.Preparation) async -> PreparationAvailability
+    private let installationWaiter: (AppleTranslationProvider.Preparation?) async -> Bool
 
 #if canImport(Translation)
     public private(set) var translationConfiguration: TranslationSession.Configuration?
@@ -27,10 +37,27 @@ public final class TranslationPreparationCoordinator {
     public private(set) var isPreparingTranslation = false
 #endif
 
-    public init() {}
+    public init() {
+        self.appLanguageIdentifier = currentAppLanguageIdentifier
+        self.preparationResolver = AppleTranslationProvider.preparation
+        self.availabilityStatusProvider = Self.systemAvailabilityStatus
+        self.installationWaiter = Self.waitForInstallationStatus
+    }
+
+    init(
+        appLanguageIdentifier: @escaping () -> String,
+        preparationResolver: @escaping (String) async -> AppleTranslationProvider.Preparation?,
+        availabilityStatusProvider: @escaping (AppleTranslationProvider.Preparation) async -> PreparationAvailability,
+        installationWaiter: @escaping (AppleTranslationProvider.Preparation?) async -> Bool
+    ) {
+        self.appLanguageIdentifier = appLanguageIdentifier
+        self.preparationResolver = preparationResolver
+        self.availabilityStatusProvider = availabilityStatusProvider
+        self.installationWaiter = installationWaiter
+    }
 
     public func refresh(force: Bool = false) async {
-        let latestLanguageIdentifier = currentAppLanguageIdentifier()
+        let latestLanguageIdentifier = appLanguageIdentifier()
         guard force || latestLanguageIdentifier != currentLanguageIdentifier else { return }
 
         currentLanguageIdentifier = latestLanguageIdentifier
@@ -39,13 +66,12 @@ public final class TranslationPreparationCoordinator {
 
 #if canImport(Translation)
         if #available(iOS 18.0, *) {
-            guard let request = await AppleTranslationProvider.preparation(for: latestLanguageIdentifier) else {
+            guard let request = await preparationResolver(latestLanguageIdentifier) else {
                 state = .ready
                 return
             }
 
-            let availability = LanguageAvailability()
-            let status = await availability.status(from: request.sourceLanguage, to: request.targetLanguage)
+            let status = await availabilityStatusProvider(request)
 
             switch status {
             case .installed:
@@ -57,8 +83,6 @@ public final class TranslationPreparationCoordinator {
                 }
             case .unsupported:
                 print("Translation preparation unsupported for language: \(latestLanguageIdentifier)")
-                state = .ready
-            @unknown default:
                 state = .ready
             }
         } else {
@@ -83,12 +107,23 @@ public final class TranslationPreparationCoordinator {
 
     @available(iOS 18.0, *)
     public func prepareTranslation(using session: sending TranslationSession) async {
+        do {
+            try await session.prepareTranslation()
+            await completePreparation(with: .success(()))
+        } catch {
+            await completePreparation(with: .failure(error))
+        }
+    }
+
+    @available(iOS 18.0, *)
+    func completePreparation(with result: Result<Void, any Error>) async {
         let request = activePreparationRequest
         var statusMessage: String?
 
-        do {
-            try await session.prepareTranslation()
-        } catch {
+        switch result {
+        case .success:
+            break
+        case .failure(let error):
             switch error {
             case CocoaError.userCancelled:
                 print("Translation preparation cancelled by user.")
@@ -108,7 +143,7 @@ public final class TranslationPreparationCoordinator {
             }
         }
 
-        let isInstalled = await waitForInstallationIfNeeded(request)
+        let isInstalled = await installationWaiter(request)
 
         translationConfiguration = nil
         activePreparationRequest = nil
@@ -137,19 +172,37 @@ public final class TranslationPreparationCoordinator {
 
     @available(iOS 18.0, *)
     private func waitForInstallationIfNeeded(_ request: AppleTranslationProvider.Preparation?) async -> Bool {
+        await Self.waitForInstallationStatus(request)
+    }
+
+    @available(iOS 18.0, *)
+    private static func systemAvailabilityStatus(_ request: AppleTranslationProvider.Preparation) async -> PreparationAvailability {
+        let availability = LanguageAvailability()
+        let status = await availability.status(from: request.sourceLanguage, to: request.targetLanguage)
+        switch status {
+        case .installed:
+            return .installed
+        case .supported:
+            return .supported
+        case .unsupported:
+            return .unsupported
+        @unknown default:
+            return .unsupported
+        }
+    }
+
+    @available(iOS 18.0, *)
+    private static func waitForInstallationStatus(_ request: AppleTranslationProvider.Preparation?) async -> Bool {
         guard let request else { return false }
 
         for _ in 0..<15 {
-            let availability = LanguageAvailability()
-            let status = await availability.status(from: request.sourceLanguage, to: request.targetLanguage)
+            let status = await systemAvailabilityStatus(request)
             switch status {
             case .installed:
                 return true
             case .supported:
                 try? await Task.sleep(for: .seconds(1))
             case .unsupported:
-                return false
-            @unknown default:
                 return false
             }
         }

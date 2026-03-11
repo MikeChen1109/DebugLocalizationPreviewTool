@@ -27,7 +27,10 @@ let package = Package(
         ),
         .testTarget(
             name: "DebugLocalizationCoreTests",
-            dependencies: ["DebugLocalizationCore"]
+            dependencies: [
+                "DebugLocalizationCore",
+                "DebugLocalizationTranslationSupport"
+            ]
         )
     ]
 )

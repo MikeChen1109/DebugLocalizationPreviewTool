@@ -4,13 +4,40 @@ import DebugLocalizationCore
 import Translation
 #endif
 
-public struct AppleTranslationProvider: LocalizationProvider {
-    public init() {}
+public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendable {
+    typealias AppLanguageIdentifierProvider = () -> String
+    typealias EnglishLanguageIdentifierChecker = (String) -> Bool
+    typealias PreparationResolver = (String) async -> Preparation?
+    typealias TranslationExecutor = (String, Preparation) async throws -> String
+
+    private let appLanguageIdentifier: AppLanguageIdentifierProvider
+    private let englishLanguageIdentifierChecker: EnglishLanguageIdentifierChecker
+    private let preparationResolver: PreparationResolver
+    private let translationExecutor: TranslationExecutor
+
+    public init() {
+        self.appLanguageIdentifier = currentAppLanguageIdentifier
+        self.englishLanguageIdentifierChecker = isEnglishLanguageIdentifier
+        self.preparationResolver = Self.preparation
+        self.translationExecutor = Self.translateUsingInstalledSession
+    }
+
+    init(
+        appLanguageIdentifier: @escaping AppLanguageIdentifierProvider,
+        englishLanguageIdentifierChecker: @escaping EnglishLanguageIdentifierChecker,
+        preparationResolver: @escaping PreparationResolver,
+        translationExecutor: @escaping TranslationExecutor
+    ) {
+        self.appLanguageIdentifier = appLanguageIdentifier
+        self.englishLanguageIdentifierChecker = englishLanguageIdentifierChecker
+        self.preparationResolver = preparationResolver
+        self.translationExecutor = translationExecutor
+    }
 
     public func translate(_ text: String) async -> String {
-        let languageIdentifier = currentAppLanguageIdentifier()
+        let languageIdentifier = appLanguageIdentifier()
 
-        guard !isEnglishLanguageIdentifier(languageIdentifier) else {
+        guard !englishLanguageIdentifierChecker(languageIdentifier) else {
             return text
         }
 
@@ -25,11 +52,11 @@ public struct AppleTranslationProvider: LocalizationProvider {
     public func translate(_ text: String, into languageIdentifier: String) async throws -> String {
 #if canImport(Translation)
         if #available(iOS 18.0, *) {
-            guard let preparation = await Self.preparation(for: languageIdentifier) else {
+            guard let preparation = await preparationResolver(languageIdentifier) else {
                 throw DebugLocalizationError.unsupportedTargetLanguage
             }
 
-            return try await Self.translateUsingInstalledSession(text, preparation: preparation)
+            return try await translationExecutor(text, preparation)
         } else {
             throw DebugLocalizationError.notSupportedOnPlatform
         }
@@ -40,7 +67,7 @@ public struct AppleTranslationProvider: LocalizationProvider {
 
 #if canImport(Translation)
     @available(iOS 18.0, *)
-    public struct Preparation {
+    public struct Preparation: Sendable {
         public let sourceLanguage: Locale.Language
         public let targetLanguage: Locale.Language
 
