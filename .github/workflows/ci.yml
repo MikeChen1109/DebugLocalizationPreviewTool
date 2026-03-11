@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  package-tests:
+    name: Package Tests
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Run Swift package tests
+        run: swift test
+
+  demo-build:
+    name: Demo Build
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Build demo app
+        run: |
+          xcodebuild \
+            -project DebugLocalizationDemo.xcodeproj \
+            -scheme DebugLocalizationDemo \
+            -destination 'generic/platform=iOS Simulator' \
+            build
