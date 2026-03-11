@@ -1,5 +1,6 @@
 import Foundation
 
+/// A sync provider that expands and accents text to stress test localized UI layout.
 public struct PseudoLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
@@ -37,6 +38,7 @@ public struct PseudoLocalizationProvider: SyncLocalizationProvider {
     }
 }
 
+/// A sync provider that returns the original text unchanged.
 public struct PassthroughLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
@@ -45,6 +47,7 @@ public struct PassthroughLocalizationProvider: SyncLocalizationProvider {
     }
 }
 
+/// A sync provider that adds the current language code to the original text for deterministic previews.
 public struct MockLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 

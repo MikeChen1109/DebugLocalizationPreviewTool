@@ -1,9 +1,11 @@
 import Foundation
 
+/// A pluggable translation backend used by `DebugLocalizer` and `DebugTranslate`.
 public protocol LocalizationProvider: Sendable {
     func translate(_ text: String) async -> String
 }
 
+/// A translation provider that can return results immediately without async work.
 public protocol SyncLocalizationProvider: LocalizationProvider {
     func translateSynchronously(_ text: String) -> String
 }

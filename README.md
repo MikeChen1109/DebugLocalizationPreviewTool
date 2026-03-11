@@ -204,32 +204,6 @@ If you want to see how this package is used in practice, check the demo app in:
 
 The demo app uses `TranslationPreparationGate` at the root and shows both SwiftUI and UIKit preview screens under the same preparation flow.
 
-## Built-in Providers
-
-### `AppleTranslationProvider`
-
-Use it when you want a simpler way to integrate Apple Translate and translate strings without repeatedly wiring Apple Translation APIs yourself.
-
-Pair it with `TranslationPreparationGate` for the quickest setup, or use `TranslationPreparationCoordinator` when you need a custom preparation UI.
-
-### `PseudoLocalizationProvider`
-
-Use this when you want to stress test UI layout.
-
-It:
-
-- replaces some characters with accented versions
-- pads text length to mimic longer translations
-- adds a visible language marker around the output
-
-### `MockLocalizationProvider`
-
-Useful when you want deterministic debug output without depending on external translation behavior.
-
-### `PassthroughLocalizationProvider`
-
-Returns the original text unchanged.
-
 ## License
 
 MIT

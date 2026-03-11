@@ -4,6 +4,7 @@ import DebugLocalizationCore
 import Translation
 #endif
 
+/// A translation provider that wraps Apple Translation behind the shared localization API.
 public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendable {
     typealias AppLanguageIdentifierProvider = () -> String
     typealias EnglishLanguageIdentifierChecker = (String) -> Bool
@@ -78,6 +79,7 @@ public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendabl
 
 #if canImport(Translation)
     @available(iOS 18.0, *)
+    /// The source and target language pair resolved for Apple Translation.
     public struct Preparation: Sendable {
         public let sourceLanguage: Locale.Language
         public let targetLanguage: Locale.Language
