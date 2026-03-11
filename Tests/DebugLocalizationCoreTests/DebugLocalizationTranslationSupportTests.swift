@@ -58,6 +58,9 @@ struct DebugLocalizationTranslationSupportTests {
         }
 
         #expect(coordinator.downloadStatusMessage == "The language pack is not ready yet. Tap to start or resume the download.")
+        #expect(coordinator.needsPreparation)
+        #expect(await coordinator.requiresPreparation())
+        #expect(coordinator.currentPreparationRequest?.targetLanguage == testPreparation.targetLanguage)
     }
 
     @Test

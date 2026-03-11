@@ -89,6 +89,29 @@ DebugTranslate.configure(provider: AppleTranslationProvider())
 let localized = await "Settings".localize()
 ```
 
+If you want a fast in-app setup that checks whether language packs are installed and prompts the system download flow when needed:
+
+```swift
+import SwiftUI
+import DebugLocalizationTranslationSupport
+
+TranslationPreparationGate {
+    ContentView()
+}
+```
+
+If you need a custom UI, drive the flow yourself with `TranslationPreparationCoordinator`:
+
+```swift
+import DebugLocalizationTranslationSupport
+
+@State private var coordinator = TranslationPreparationCoordinator()
+
+.task {
+    await coordinator.refresh()
+}
+```
+
 ## Usage Notes
 
 ### Apple Translation Support
@@ -104,16 +127,28 @@ Notes:
 
 ### Language Packs
 
-Before testing with `AppleTranslationProvider`, it is recommended to download the target language packs first in Apple's built-in `Translate` app.
+For a quick setup, wrap your root debug UI with `TranslationPreparationGate`. It checks whether the required language pack is installed and can trigger Apple's in-app preparation flow before your localized preview content appears.
 
-Recommended setup:
+Example:
 
-1. Open the built-in `Translate` app on the device.
-2. Go to the app's language management area.
-3. Download the languages you want to test first.
-4. Return to your app and run the preview flow.
+```swift
+import DebugLocalizationTranslationSupport
 
-This is currently the smoothest setup for developers using the package in their own projects.
+TranslationPreparationGate {
+    RootView()
+}
+```
+
+If you want full control over the UI, use `TranslationPreparationCoordinator` directly and render your own loading or prompt states.
+
+You can also query the current preparation state:
+
+```swift
+let needsPreparation = await coordinator.requiresPreparation()
+let state = await coordinator.refreshPreparationStatus()
+```
+
+If you prefer not to use the in-app flow, you can still download language packs ahead of time in Apple's built-in `Translate` app.
 
 ### If Downloads Seem Stuck
 
@@ -163,11 +198,15 @@ If you want to see how this package is used in practice, check the demo app in:
 
 - `DebugLocalizationDemo/`
 
+The demo app uses `TranslationPreparationGate` at the root and shows both SwiftUI and UIKit preview screens under the same preparation flow.
+
 ## Built-in Providers
 
 ### `AppleTranslationProvider`
 
 Use it when you want preview output closer to real translated content and want to reduce manual translation work during development.
+
+Pair it with `TranslationPreparationGate` for the quickest setup, or use `TranslationPreparationCoordinator` when you need a custom preparation UI.
 
 ### `PseudoLocalizationProvider`
 

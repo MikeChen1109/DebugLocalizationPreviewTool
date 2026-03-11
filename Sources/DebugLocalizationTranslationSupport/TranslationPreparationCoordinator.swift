@@ -8,7 +8,7 @@ import Translation
 @MainActor
 @Observable
 public final class TranslationPreparationCoordinator {
-    enum PreparationAvailability: Sendable {
+    public enum PreparationAvailability: Sendable {
         case installed
         case supported
         case unsupported
@@ -93,7 +93,34 @@ public final class TranslationPreparationCoordinator {
 #endif
     }
 
+    public var needsPreparation: Bool {
 #if canImport(Translation)
+        if case .needsDownload = state {
+            return true
+        }
+#endif
+        return false
+    }
+
+    public func refreshPreparationStatus(force: Bool = false) async -> State {
+        await refresh(force: force)
+        return state
+    }
+
+    public func requiresPreparation(force: Bool = false) async -> Bool {
+        await refresh(force: force)
+        return needsPreparation
+    }
+
+#if canImport(Translation)
+    @available(iOS 18.0, *)
+    public var currentPreparationRequest: AppleTranslationProvider.Preparation? {
+        if case .needsDownload(let request) = state {
+            return request
+        }
+        return nil
+    }
+
     @available(iOS 18.0, *)
     public func startPreparation(for request: AppleTranslationProvider.Preparation) {
         downloadStatusMessage = "Waiting for the system translation download to finish."
