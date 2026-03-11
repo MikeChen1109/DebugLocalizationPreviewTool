@@ -6,6 +6,17 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-11
+
+### Added
+- Added `TranslationPreparationGate` as a quick in-app SwiftUI entry point for checking translation language pack availability and triggering the system preparation flow.
+- Added `TranslationPreparationCoordinator.needsPreparation`, `refreshPreparationStatus(force:)`, `requiresPreparation(force:)`, and `currentPreparationRequest` to support custom preparation UIs.
+
+### Changed
+- Updated the demo app to use `TranslationPreparationGate` at the root instead of wiring the preparation flow directly in `RootDemoView`.
+- Simplified the demo app startup flow to always configure `AppleTranslationProvider()` for the translation preparation example.
+- Updated the README to document the in-app preparation flow, coordinator-based customization, and the new demo usage.
+
 ### Changed
 - Moved package sources to the standard top-level `Sources/` and `Tests/` layout.
 - Removed `DebugLocalizationConfiguration` from the public package surface and kept provider setup centered on `DebugTranslate.configure(provider:)`.
