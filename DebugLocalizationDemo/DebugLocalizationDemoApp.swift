@@ -4,11 +4,14 @@ import DebugLocalizationTranslationSupport
 
 @main
 struct DebugLocalizationDemoApp: App {
-    private let configuration: DebugLocalizationConfiguration
+    private let providerMode: DemoProviderMode
+    private let shouldPresentPreparationGate: Bool
 
     init() {
-        configuration = .debugDefault
-        switch configuration.providerMode {
+        providerMode = .appleTranslation
+        shouldPresentPreparationGate = true
+
+        switch providerMode {
         case .appleTranslation:
             DebugTranslate.configure(provider: AppleTranslationProvider())
         case .pseudoLocalization:
@@ -16,13 +19,20 @@ struct DebugLocalizationDemoApp: App {
         case .passthrough:
             DebugTranslate.configure(provider: PassthroughLocalizationProvider())
         case .mock:
-            DebugTranslate.configure(provider: MockTranslationProvider())
+            DebugTranslate.configure(provider: MockLocalizationProvider())
         }
     }
 
     var body: some Scene {
         WindowGroup {
-            RootDemoView(configuration: configuration)
+            RootDemoView(shouldPresentPreparationGate: shouldPresentPreparationGate)
         }
     }
 }
+private enum DemoProviderMode {
+    case appleTranslation
+    case pseudoLocalization
+    case passthrough
+    case mock
+}
+

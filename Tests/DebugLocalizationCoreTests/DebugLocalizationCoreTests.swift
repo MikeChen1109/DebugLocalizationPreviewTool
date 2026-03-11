@@ -27,19 +27,27 @@ struct DebugLocalizationCoreTests {
 
     @Test
     func syncLocalizationUsesSyncCapableProvider() {
-        DebugTranslate.configure(provider: MockTranslationProvider())
+        DebugTranslate.configure(provider: MockLocalizationProvider())
 
         let localized = "Settings".localizeSync()
 
-        #expect(localized != nil)
-        #expect(localized?.contains("Settings") == true)
+        #expect(localized.contains("Settings"))
     }
 
     @Test
-    func syncLocalizationReturnsNilForAsyncOnlyProvider() {
+    func syncLocalizationFallsBackToOriginalTextForAsyncOnlyProvider() {
         let localizer = DebugLocalizer(provider: AsyncOnlyProvider())
 
-        #expect(localizer.localizeSync("Settings") == nil)
+        #expect(localizer.localizeSync("Settings") == "Settings")
+    }
+
+    @Test
+    func localizerReportsSyncCapability() {
+        let syncLocalizer = DebugLocalizer(provider: PseudoLocalizationProvider())
+        let asyncLocalizer = DebugLocalizer(provider: AsyncOnlyProvider())
+
+        #expect(syncLocalizer.canLocalizeSynchronously)
+        #expect(!asyncLocalizer.canLocalizeSynchronously)
     }
 }
 

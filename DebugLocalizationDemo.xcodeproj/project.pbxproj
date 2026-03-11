@@ -205,7 +205,7 @@
 			mainGroup = 946450642F5F665E00F1661D;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "frameworks/DebugLocalizationPackage" */,
+				94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "." */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9464506E2F5F665E00F1661D /* Products */;
@@ -592,9 +592,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "frameworks/DebugLocalizationPackage" */ = {
+		94B75D612F609AAB0000BA49 /* XCLocalSwiftPackageReference "." */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = frameworks/DebugLocalizationPackage;
+			relativePath = .;
 		};
 /* End XCLocalSwiftPackageReference section */
 

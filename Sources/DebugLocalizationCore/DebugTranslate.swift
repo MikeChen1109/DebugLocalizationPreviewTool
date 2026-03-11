@@ -14,6 +14,18 @@ public enum DebugTranslate {
     public static var localizer: DebugLocalizer {
         sharedStore.localizer
     }
+
+    public static var canLocalizeSynchronously: Bool {
+        localizer.canLocalizeSynchronously
+    }
+
+    public static func clearCache() {
+        localizer.clearCache()
+    }
+
+    public static func reset() {
+        configure(provider: PseudoLocalizationProvider())
+    }
 }
 
 private final class SharedLocalizerStore: @unchecked Sendable {

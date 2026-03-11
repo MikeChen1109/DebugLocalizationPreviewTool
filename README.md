@@ -74,7 +74,7 @@ For providers that do not require async work:
 ```swift
 import DebugLocalizationCore
 
-DebugTranslate.configure(provider: MockTranslationProvider())
+DebugTranslate.configure(provider: MockLocalizationProvider())
 
 let localized = "Settings".localizeSync()
 ```
@@ -134,11 +134,28 @@ Use `DebugTranslate.configure(provider:)` during app startup to define the defau
 
 If needed, you can still create a custom `DebugLocalizer(provider:)` and pass it explicitly to `String.localize(using:)`.
 
+You can also reset or clear the shared localizer state:
+
+```swift
+DebugTranslate.clearCache()
+DebugTranslate.reset()
+```
+
 ### Sync API
 
 `localizeSync()` is intentionally limited to providers conforming to `SyncLocalizationProvider`.
 
-If the configured provider is async-only, `localizeSync()` returns `nil` instead of blocking.
+If the configured provider is async-only, `localizeSync()` falls back to the original text instead of blocking.
+
+Use sync APIs for:
+
+- `PseudoLocalizationProvider`
+- `PassthroughLocalizationProvider`
+- `MockLocalizationProvider`
+
+Use async APIs for:
+
+- `AppleTranslationProvider`
 
 ### Example App
 
@@ -162,7 +179,7 @@ It:
 - pads text length to mimic longer translations
 - adds a visible language marker around the output
 
-### `MockTranslationProvider`
+### `MockLocalizationProvider`
 
 Useful when you want deterministic debug output without depending on external translation behavior.
 

@@ -13,14 +13,18 @@ public final class DebugLocalizer: @unchecked Sendable {
         self.provider = provider
     }
 
+    public var canLocalizeSynchronously: Bool {
+        provider is any SyncLocalizationProvider
+    }
+
     public func localize(_ text: String) async -> String {
-        let cacheKey = "\(currentAppLanguageIdentifier())|\(text)"
+        let cacheKey = cacheKey(for: text)
         if let cached = cachedValue(for: cacheKey) {
             return cached
         }
 
         if let syncProvider = provider as? any SyncLocalizationProvider {
-            let localized = syncProvider.translateSync(text)
+            let localized = syncProvider.translateSynchronously(text)
             store(localized, for: cacheKey)
             return localized
         }
@@ -30,25 +34,35 @@ public final class DebugLocalizer: @unchecked Sendable {
         return localized
     }
 
-    public func localizeSync(_ text: String) -> String? {
+    public func localizeSync(_ text: String) -> String {
         guard let syncProvider = provider as? any SyncLocalizationProvider else {
-            return nil
+            return text
         }
 
-        let cacheKey = "\(currentAppLanguageIdentifier())|\(text)"
+        let cacheKey = cacheKey(for: text)
         if let cached = cachedValue(for: cacheKey) {
             return cached
         }
 
-        let localized = syncProvider.translateSync(text)
+        let localized = syncProvider.translateSynchronously(text)
         store(localized, for: cacheKey)
         return localized
+    }
+
+    public func clearCache() {
+        lock.lock()
+        cache.removeAll()
+        lock.unlock()
     }
 
     private func cachedValue(for key: String) -> String? {
         lock.lock()
         defer { lock.unlock() }
         return cache[key]
+    }
+
+    private func cacheKey(for text: String) -> String {
+        "\(currentAppLanguageIdentifier())|\(text)"
     }
 
     private func store(_ value: String, for key: String) {

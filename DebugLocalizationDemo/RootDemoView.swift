@@ -6,7 +6,7 @@ import Translation
 #endif
 
 struct RootDemoView: View {
-    let configuration: DebugLocalizationConfiguration
+    let shouldPresentPreparationGate: Bool
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var preparationCoordinator = TranslationPreparationCoordinator()
@@ -41,7 +41,7 @@ struct RootDemoView: View {
     @ViewBuilder
     private var rootContent: some View {
 #if canImport(Translation)
-        if configuration.shouldPresentPreparationGate, #available(iOS 18.0, *) {
+        if shouldPresentPreparationGate, #available(iOS 18.0, *) {
             switch preparationCoordinator.state {
             case .ready:
                 tabContent

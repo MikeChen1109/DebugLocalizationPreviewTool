@@ -6,6 +6,17 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+### Changed
+- Moved package sources to the standard top-level `Sources/` and `Tests/` layout.
+- Removed `DebugLocalizationConfiguration` from the public package surface and kept provider setup centered on `DebugTranslate.configure(provider:)`.
+- Improved sync localization ergonomics so `localizeSync()` now falls back to the original text for async-only providers.
+- Renamed the sync mock implementation to `MockLocalizationProvider`.
+
+### Added
+- Added `DebugLocalizer.canLocalizeSynchronously`.
+- Added `DebugLocalizer.clearCache()`.
+- Added `DebugTranslate.canLocalizeSynchronously`, `DebugTranslate.clearCache()`, and `DebugTranslate.reset()`.
+
 ## [0.2.0] - 2026-03-11
 
 ### Added

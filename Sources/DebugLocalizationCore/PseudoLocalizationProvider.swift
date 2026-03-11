@@ -3,7 +3,7 @@ import Foundation
 public struct PseudoLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSync(_ text: String) -> String {
+    public func translateSynchronously(_ text: String) -> String {
         let languageIdentifier = currentAppLanguageIdentifier()
         let locale = Locale(identifier: languageIdentifier)
         let languageCode = locale.language.languageCode?.identifier ?? languageIdentifier
@@ -40,18 +40,21 @@ public struct PseudoLocalizationProvider: SyncLocalizationProvider {
 public struct PassthroughLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSync(_ text: String) -> String {
+    public func translateSynchronously(_ text: String) -> String {
         text
     }
 }
 
-public struct MockTranslationProvider: SyncLocalizationProvider {
+public struct MockLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSync(_ text: String) -> String {
+    public func translateSynchronously(_ text: String) -> String {
         let languageIdentifier = currentAppLanguageIdentifier()
         let locale = Locale(identifier: languageIdentifier)
         let languageCode = locale.language.languageCode?.identifier ?? languageIdentifier
         return "[\(languageCode.uppercased())] \(text)"
     }
 }
+
+@available(*, deprecated, renamed: "MockLocalizationProvider")
+public typealias MockTranslationProvider = MockLocalizationProvider

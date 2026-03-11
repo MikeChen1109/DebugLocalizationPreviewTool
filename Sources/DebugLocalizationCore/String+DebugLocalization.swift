@@ -5,7 +5,7 @@ public extension String {
         await DebugLocalizer.shared.localize(self)
     }
 
-    func localizeSync() -> String? {
+    func localizeSync() -> String {
         DebugLocalizer.shared.localizeSync(self)
     }
 
@@ -13,7 +13,7 @@ public extension String {
         await localizer.localize(self)
     }
 
-    func localizeSync(using localizer: DebugLocalizer) -> String? {
+    func localizeSync(using localizer: DebugLocalizer) -> String {
         localizer.localizeSync(self)
     }
 }

@@ -4,7 +4,4 @@
    <FileRef
       location = "group:DebugLocalizationDemo.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:frameworks/DebugLocalizationPackage">
-   </FileRef>
 </Workspace>

@@ -19,18 +19,15 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "DebugLocalizationCore",
-            path: "frameworks/DebugLocalizationPackage/Sources/DebugLocalizationCore"
+            name: "DebugLocalizationCore"
         ),
         .target(
             name: "DebugLocalizationTranslationSupport",
-            dependencies: ["DebugLocalizationCore"],
-            path: "frameworks/DebugLocalizationPackage/Sources/DebugLocalizationTranslationSupport"
+            dependencies: ["DebugLocalizationCore"]
         ),
         .testTarget(
             name: "DebugLocalizationCoreTests",
-            dependencies: ["DebugLocalizationCore"],
-            path: "frameworks/DebugLocalizationPackage/Tests/DebugLocalizationCoreTests"
+            dependencies: ["DebugLocalizationCore"]
         )
     ]
 )

@@ -5,12 +5,12 @@ public protocol LocalizationProvider: Sendable {
 }
 
 public protocol SyncLocalizationProvider: LocalizationProvider {
-    func translateSync(_ text: String) -> String
+    func translateSynchronously(_ text: String) -> String
 }
 
 public extension SyncLocalizationProvider {
     func translate(_ text: String) async -> String {
-        translateSync(text)
+        translateSynchronously(text)
     }
 }
 
