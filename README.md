@@ -22,6 +22,7 @@ https://github.com/MikeChen1109/LiveLocalizationKit.git
 Available products:
 
 - `LiveLocalizationCore`
+- `LiveLocalizationUI`
 - `LiveLocalizationTranslationSupport`
 
 ## Quick Start
@@ -32,11 +33,34 @@ Configure Apple Translation-based preview:
 import LiveLocalizationCore
 import LiveLocalizationTranslationSupport
 
-LiveLocalization.configure(provider: AppleTranslationProvider())
+await LiveLocalization.configure(provider: AppleTranslationProvider())
 let localized = await "Settings".localize()
 ```
 
 For lightweight development flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
+
+## UI Layer
+
+`LiveLocalizationUI` adds simple view wrappers on top of the core localizer layer.
+
+SwiftUI:
+
+```swift
+import SwiftUI
+import LiveLocalizationUI
+
+LiveLocalizedText("Continue")
+```
+
+UIKit:
+
+```swift
+import UIKit
+import LiveLocalizationUI
+
+let label = LiveLocalizedLabel()
+label.setLocalizedText("Continue")
+```
 
 ## Apple Translation Preview
 

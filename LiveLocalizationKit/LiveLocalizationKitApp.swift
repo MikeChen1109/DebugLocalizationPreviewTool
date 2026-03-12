@@ -5,15 +5,26 @@ import LiveLocalizationTranslationSupport
 @main
 struct LiveLocalizationKitApp: App {
     private let shouldPresentPreparationGate: Bool
+    @State private var isConfigured = false
 
     init() {
         shouldPresentPreparationGate = true
-        LiveLocalization.configure(provider: AppleTranslationProvider())
     }
 
     var body: some Scene {
         WindowGroup {
-            RootDemoView(shouldPresentPreparationGate: shouldPresentPreparationGate)
+            Group {
+                if isConfigured {
+                    RootDemoView(shouldPresentPreparationGate: shouldPresentPreparationGate)
+                } else {
+                    ProgressView()
+                }
+            }
+            .task {
+                guard !isConfigured else { return }
+                await LiveLocalization.configure(provider: AppleTranslationProvider())
+                isConfigured = true
+            }
         }
     }
 }

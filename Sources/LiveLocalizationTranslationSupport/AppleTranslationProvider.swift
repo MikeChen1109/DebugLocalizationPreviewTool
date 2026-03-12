@@ -5,11 +5,11 @@ import Translation
 #endif
 
 /// A translation provider that wraps Apple Translation behind the shared localization API.
-public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendable {
-    typealias AppLanguageIdentifierProvider = () -> String
-    typealias EnglishLanguageIdentifierChecker = (String) -> Bool
-    typealias PreparationResolver = (String) async -> Preparation?
-    typealias TranslationExecutor = (String, Preparation) async throws -> String
+public struct AppleTranslationProvider: LocalizationProvider, Sendable {
+    typealias AppLanguageIdentifierProvider = @Sendable () -> String
+    typealias EnglishLanguageIdentifierChecker = @Sendable (String) -> Bool
+    typealias PreparationResolver = @Sendable (String) async -> Preparation?
+    typealias TranslationExecutor = @Sendable (String, Preparation) async throws -> String
 
     private let appLanguageIdentifier: AppLanguageIdentifierProvider
     private let englishLanguageIdentifierChecker: EnglishLanguageIdentifierChecker

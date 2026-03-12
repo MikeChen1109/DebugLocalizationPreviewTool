@@ -3,44 +3,45 @@ import Foundation
 public enum LiveLocalization {
     private static let sharedStore = SharedLocalizerStore()
 
-    public static func configure(provider: any LocalizationProvider) {
-        sharedStore.setLocalizer(LiveLocalizer(provider: provider))
+    public static func configure(provider: any LocalizationProvider) async {
+        await sharedStore.setLocalizer(LiveLocalizer(provider: provider))
     }
 
-    public static func configure(localizer: LiveLocalizer) {
-        sharedStore.setLocalizer(localizer)
+    public static func configure(localizer: LiveLocalizer) async {
+        await sharedStore.setLocalizer(localizer)
     }
 
     public static var localizer: LiveLocalizer {
-        sharedStore.localizer
+        get async {
+            await sharedStore.localizer
+        }
     }
 
     public static var canLocalizeSynchronously: Bool {
-        localizer.canLocalizeSynchronously
+        get async {
+            let localizer = await localizer
+            return await localizer.canLocalizeSynchronously
+        }
     }
 
-    public static func clearCache() {
-        localizer.clearCache()
+    public static func clearCache() async {
+        let localizer = await localizer
+        await localizer.clearCache()
     }
 
-    public static func reset() {
-        configure(provider: PseudoLocalizationProvider())
+    public static func reset() async {
+        await configure(provider: PseudoLocalizationProvider())
     }
 }
 
-private final class SharedLocalizerStore: @unchecked Sendable {
-    private let lock = NSLock()
+private actor SharedLocalizerStore {
     private var currentLocalizer = LiveLocalizer(provider: PseudoLocalizationProvider())
 
     var localizer: LiveLocalizer {
-        lock.lock()
-        defer { lock.unlock() }
         return currentLocalizer
     }
 
     func setLocalizer(_ localizer: LiveLocalizer) {
-        lock.lock()
         currentLocalizer = localizer
-        lock.unlock()
     }
 }

@@ -14,6 +14,10 @@ let package = Package(
             targets: ["LiveLocalizationCore"]
         ),
         .library(
+            name: "LiveLocalizationUI",
+            targets: ["LiveLocalizationUI"]
+        ),
+        .library(
             name: "LiveLocalizationTranslationSupport",
             targets: ["LiveLocalizationTranslationSupport"]
         )
@@ -23,6 +27,10 @@ let package = Package(
             name: "LiveLocalizationCore"
         ),
         .target(
+            name: "LiveLocalizationUI",
+            dependencies: ["LiveLocalizationCore"]
+        ),
+        .target(
             name: "LiveLocalizationTranslationSupport",
             dependencies: ["LiveLocalizationCore"]
         ),
@@ -30,6 +38,7 @@ let package = Package(
             name: "LiveLocalizationCoreTests",
             dependencies: [
                 "LiveLocalizationCore",
+                "LiveLocalizationUI",
                 "LiveLocalizationTranslationSupport"
             ]
         )

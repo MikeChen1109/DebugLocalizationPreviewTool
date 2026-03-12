@@ -6,10 +6,21 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-13
+
+### Added
+- Added the new `LiveLocalizationUI` product for UI-level localization wrappers.
+- Added `LiveLocalizedText` for SwiftUI.
+- Added `LiveLocalizedLabel` for UIKit.
+- Added `LiveLocalizationTextAnimation` with `.none` and `.fade` styles.
+- Added UI-layer request coordination tests and demo coverage for the new wrappers.
+
 ### Changed
-- Renamed the package surface from `DebugLocalization` to `LiveLocalizationKit`.
-- Renamed primary modules to `LiveLocalizationCore` and `LiveLocalizationTranslationSupport`.
-- Renamed the shared runtime API to `LiveLocalization`, `LiveLocalizer`, `LiveLocalizationError`, and `LiveLocalizationVersion`.
+- Moved shared localization state to actor-based concurrency instead of relying on `@unchecked Sendable`.
+- Updated `LiveLocalization` shared configuration flow to async usage.
+- Updated the demo app to show both direct core API usage and the new UI wrapper usage in SwiftUI and UIKit.
+- Updated README examples to reflect the current package naming, install path, and UI-layer APIs.
+- Continued the package rename from the previous `DebugLocalization*` surface to the `LiveLocalization*` naming now used across the repository.
 
 ## [0.3.0] - 2026-03-11
 

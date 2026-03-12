@@ -17,12 +17,16 @@ struct LiveLocalizationCoreTests {
 
     @Test
     func stringExtensionUsesConfiguredSharedLocalizer() async {
-        defer { LiveLocalization.reset() }
+        defer {
+            Task {
+                await LiveLocalization.reset()
+            }
+        }
 
-        LiveLocalization.configure(provider: PassthroughLocalizationProvider())
+        await LiveLocalization.configure(provider: PassthroughLocalizationProvider())
         let passthrough = await "Settings".localize()
 
-        LiveLocalization.configure(provider: PseudoLocalizationProvider())
+        await LiveLocalization.configure(provider: PseudoLocalizationProvider())
         let pseudoLocalized = await "Settings".localize()
 
         #expect(passthrough == "Settings")
@@ -30,21 +34,25 @@ struct LiveLocalizationCoreTests {
     }
 
     @Test
-    func syncLocalizationUsesSyncCapableProvider() {
-        defer { LiveLocalization.reset() }
+    func asyncLocalizationUsesSyncCapableProvider() async {
+        defer {
+            Task {
+                await LiveLocalization.reset()
+            }
+        }
 
-        LiveLocalization.configure(provider: MockLocalizationProvider())
+        await LiveLocalization.configure(provider: MockLocalizationProvider())
 
-        let localized = "Settings".localizeSync()
+        let localized = await "Settings".localize()
 
         #expect(localized.contains("Settings"))
     }
 
     @Test
-    func syncLocalizationFallsBackToOriginalTextForAsyncOnlyProvider() {
+    func cachedLocalizationReturnsNilForUnknownValue() async {
         let localizer = LiveLocalizer(provider: AsyncOnlyProvider())
 
-        #expect(localizer.localizeSync("Settings") == "Settings")
+        #expect(await localizer.cachedLocalization(for: "Settings") == nil)
     }
 
     @Test
@@ -66,16 +74,16 @@ struct LiveLocalizationCoreTests {
 
         #expect(first == "[async-1] Settings")
         #expect(second == first)
-        #expect(counter.value == 1)
+        #expect(await counter.value == 1)
     }
 
     @Test
-    func localizerReportsSyncCapability() {
+    func localizerReportsSyncCapability() async {
         let syncLocalizer = LiveLocalizer(provider: PseudoLocalizationProvider())
         let asyncLocalizer = LiveLocalizer(provider: AsyncOnlyProvider())
 
-        #expect(syncLocalizer.canLocalizeSynchronously)
-        #expect(!asyncLocalizer.canLocalizeSynchronously)
+        #expect(await syncLocalizer.canLocalizeSynchronously)
+        #expect(await !asyncLocalizer.canLocalizeSynchronously)
     }
 }
 
@@ -85,19 +93,14 @@ private struct AsyncOnlyProvider: LocalizationProvider {
     }
 }
 
-private final class LockedCounter: @unchecked Sendable {
-    private let lock = NSLock()
+private actor LockedCounter {
     private var storage = 0
 
     var value: Int {
-        lock.lock()
-        defer { lock.unlock() }
         return storage
     }
 
     func increment() -> Int {
-        lock.lock()
-        defer { lock.unlock() }
         storage += 1
         return storage
     }
@@ -107,7 +110,7 @@ private struct CountingAsyncProvider: LocalizationProvider {
     let counter: LockedCounter
 
     func translate(_ text: String) async -> String {
-        let callCount = counter.increment()
+        let callCount = await counter.increment()
         return "[async-\(callCount)] \(text)"
     }
 }

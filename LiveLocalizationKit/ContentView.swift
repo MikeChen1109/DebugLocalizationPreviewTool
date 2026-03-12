@@ -1,27 +1,46 @@
 import SwiftUI
 import LiveLocalizationCore
+import LiveLocalizationUI
 
 struct ContentView: View {
     private let englishSourceText = "Payment successful"
+    private let wrapperSourceText = "Continue"
 
-    @State private var displayedText: String
-
-    init() {
-        _displayedText = State(initialValue: englishSourceText)
-    }
+    @State private var coreLocalizedText = "Payment successful"
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 24) {
             Text("SwiftUI Demo")
                 .font(.headline)
-            Text(displayedText)
+
+            VStack(spacing: 8) {
+                Text("Core API")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+
+                Text(coreLocalizedText)
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+            }
+
+            VStack(spacing: 8) {
+                Text("UI Wrapper")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+
+                LiveLocalizedText(
+                    wrapperSourceText,
+                    animationStyle: .fade
+                )
                 .font(.title2)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
+            }
         }
         .padding()
         .task {
-            displayedText = await englishSourceText.localize()
+            coreLocalizedText = await englishSourceText.localize()
         }
     }
 }

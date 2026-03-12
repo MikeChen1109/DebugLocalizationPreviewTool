@@ -1,14 +1,46 @@
 import UIKit
 import LiveLocalizationCore
+import LiveLocalizationUI
 
 final class UIKitDemoViewController: UIViewController {
-    private let englishSourceText = "Delete"
+    private let coreSourceText = "Delete"
+    private let wrapperSourceText = "Continue"
 
-    private let label: UILabel = {
+    private let coreTitleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = "Core API"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let coreLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .title2)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let wrapperTitleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.text = "UI Wrapper"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    private let wrapperLabel: LiveLocalizedLabel = {
+        let label = LiveLocalizedLabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.animationStyle = .fade
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -26,21 +58,32 @@ final class UIKitDemoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(label)
+        let stackView = UIStackView(arrangedSubviews: [
+            coreTitleLabel,
+            coreLabel,
+            wrapperTitleLabel,
+            wrapperLabel
+        ])
+        stackView.axis = .vertical
+        stackView.spacing = 12
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
-        label.text = englishSourceText
+        coreLabel.text = coreSourceText
         Task { [weak self] in
             guard let self else { return }
-            let localized = await englishSourceText.localize()
+            let localized = await coreSourceText.localize()
             await MainActor.run {
-                self.label.text = localized
+                self.coreLabel.text = localized
             }
         }
+
+        wrapperLabel.setLocalizedText(wrapperSourceText)
     }
 }

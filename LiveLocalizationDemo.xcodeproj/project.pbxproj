@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		94B75D632F609AAB0000BA49 /* LiveLocalizationCore in Frameworks */ = {isa = PBXBuildFile; productRef = 94B75D622F609AAB0000BA49 /* LiveLocalizationCore */; };
 		94B75D652F609AAB0000BA49 /* LiveLocalizationTranslationSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 94B75D642F609AAB0000BA49 /* LiveLocalizationTranslationSupport */; };
+		94CDC0012F7000010000BA49 /* LiveLocalizationUI in Frameworks */ = {isa = PBXBuildFile; productRef = 94CDC0002F7000010000BA49 /* LiveLocalizationUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94B75D632F609AAB0000BA49 /* LiveLocalizationCore in Frameworks */,
+				94CDC0012F7000010000BA49 /* LiveLocalizationUI in Frameworks */,
 				94B75D652F609AAB0000BA49 /* LiveLocalizationTranslationSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +122,7 @@
 			name = LiveLocalizationKit;
 			packageProductDependencies = (
 				94B75D622F609AAB0000BA49 /* LiveLocalizationCore */,
+				94CDC0002F7000010000BA49 /* LiveLocalizationUI */,
 				94B75D642F609AAB0000BA49 /* LiveLocalizationTranslationSupport */,
 			);
 			productName = LiveLocalizationKit;
@@ -606,6 +609,10 @@
 		94B75D642F609AAB0000BA49 /* LiveLocalizationTranslationSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LiveLocalizationTranslationSupport;
+		};
+		94CDC0002F7000010000BA49 /* LiveLocalizationUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LiveLocalizationUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
