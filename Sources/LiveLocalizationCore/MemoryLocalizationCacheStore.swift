@@ -8,6 +8,8 @@ public actor MemoryLocalizationCacheStore: LocalizationCacheStore {
         self.storage = storage
     }
 
+    public func prepareForUse() {}
+
     public func cacheEntry(forKey key: String) -> LocalizationCacheEntry? {
         guard let entry = storage[key] else {
             return nil

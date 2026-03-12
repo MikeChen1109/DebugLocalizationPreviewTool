@@ -24,10 +24,15 @@ public struct LocalizationCacheEntry: Sendable, Codable, Hashable {
 
 /// A pluggable cache store used by ``LiveLocalizer``.
 public protocol LocalizationCacheStore: Sendable {
+    func prepareForUse() async
     func cacheEntry(forKey key: String) async -> LocalizationCacheEntry?
     func setCacheEntry(_ entry: LocalizationCacheEntry, forKey key: String) async
     func removeLocalizedText(forKey key: String) async
     func removeAllLocalizedText() async
+}
+
+public extension LocalizationCacheStore {
+    func prepareForUse() async {}
 }
 
 /// Cache policy used by ``LiveLocalizer`` to segment and expire stored results.

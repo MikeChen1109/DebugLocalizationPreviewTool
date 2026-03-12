@@ -19,6 +19,10 @@ public actor LiveLocalizer {
         provider is any SyncLocalizationProvider
     }
 
+    public func prepareForUse() async {
+        await cacheStore.prepareForUse()
+    }
+
     /// Returns a cached localized value for the given text if one is already available.
     public func cachedLocalization(for text: String) async -> String? {
         await cachedLocalization(for: LocalizationRequest(sourceText: text))

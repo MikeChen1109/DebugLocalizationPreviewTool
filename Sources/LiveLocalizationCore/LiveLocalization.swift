@@ -13,6 +13,7 @@ public enum LiveLocalization {
             cacheStore: cacheStore,
             cachePolicy: cachePolicy
         )
+        await localizer.prepareForUse()
         await sharedStore.setLocalizer(localizer)
     }
 

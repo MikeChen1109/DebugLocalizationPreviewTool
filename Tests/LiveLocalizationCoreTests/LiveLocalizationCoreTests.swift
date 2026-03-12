@@ -90,6 +90,52 @@ struct LiveLocalizationCoreTests {
     }
 
     @Test
+    func sharedConfigurePrewarmsDiskCacheStore() async {
+        defer {
+            Task {
+                await LiveLocalization.reset()
+            }
+        }
+
+        let fileURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+            .appendingPathComponent("LiveLocalizationCache.json")
+        let request = LocalizationRequest(
+            sourceText: "Settings",
+            targetLanguageIdentifier: "ja",
+            context: "settings.title"
+        )
+        let counter = LockedCounter()
+
+        let seedLocalizer = LiveLocalizer(
+            provider: CountingAsyncProvider(counter: counter),
+            cacheStore: DiskLocalizationCacheStore(fileURL: fileURL),
+            cachePolicy: LocalizationCachePolicy(
+                namespace: "shared",
+                providerIdentifier: "seed"
+            )
+        )
+        _ = await seedLocalizer.localize(request)
+
+        await LiveLocalization.configure(
+            provider: CountingAsyncProvider(counter: counter),
+            cacheStore: DiskLocalizationCacheStore(fileURL: fileURL),
+            cachePolicy: LocalizationCachePolicy(
+                namespace: "shared",
+                providerIdentifier: "seed"
+            )
+        )
+
+        let localized = await "Settings".localize(
+            targetLanguageIdentifier: "ja",
+            context: "settings.title"
+        )
+
+        #expect(localized == "[async-1] Settings")
+        #expect(await counter.value == 1)
+    }
+
+    @Test
     func cachedLocalizationReturnsNilForUnknownValue() async {
         let localizer = LiveLocalizer(provider: AsyncOnlyProvider())
 

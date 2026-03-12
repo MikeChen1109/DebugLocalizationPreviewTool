@@ -26,6 +26,10 @@ public actor DiskLocalizationCacheStore: LocalizationCacheStore {
         self.fileManager = fileManager
     }
 
+    public func prepareForUse() async {
+        await loadIfNeeded()
+    }
+
     public func cacheEntry(forKey key: String) async -> LocalizationCacheEntry? {
         await loadIfNeeded()
         guard let entry = storage[key] else {
