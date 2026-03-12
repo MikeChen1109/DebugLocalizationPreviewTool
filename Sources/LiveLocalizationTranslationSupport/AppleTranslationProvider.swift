@@ -46,19 +46,15 @@ public struct AppleTranslationProvider: LocalizationProvider, Sendable {
         }
     }
 
-    public func translate(_ text: String) async -> String {
-        let languageIdentifier = appLanguageIdentifier()
+    public func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
+        let languageIdentifier = request.targetLanguageIdentifier ?? appLanguageIdentifier()
 
         guard !englishLanguageIdentifierChecker(languageIdentifier) else {
-            return text
+            return LocalizationResponse(localizedText: request.sourceText)
         }
 
-        do {
-            return try await translate(text, into: languageIdentifier)
-        } catch {
-            print("Debug localization fallback. Error: \(error)")
-            return text
-        }
+        let localizedText = try await translate(request.sourceText, into: languageIdentifier)
+        return LocalizationResponse(localizedText: localizedText)
     }
 
     public func translate(_ text: String, into languageIdentifier: String) async throws -> String {

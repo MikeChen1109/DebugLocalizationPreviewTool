@@ -4,13 +4,13 @@ import Foundation
 public struct PseudoLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSynchronously(_ text: String) -> String {
-        let languageIdentifier = currentAppLanguageIdentifier()
+    public func translateSynchronously(_ request: LocalizationRequest) throws -> LocalizationResponse {
+        let languageIdentifier = request.targetLanguageIdentifier ?? currentAppLanguageIdentifier()
         let locale = Locale(identifier: languageIdentifier)
         let languageCode = locale.language.languageCode?.identifier ?? languageIdentifier
-        let accented = accent(text)
+        let accented = accent(request.sourceText)
         let padded = pad(accented)
-        return "[\(languageCode.uppercased()) ⟪\(padded)⟫]"
+        return LocalizationResponse(localizedText: "[\(languageCode.uppercased()) ⟪\(padded)⟫]")
     }
 
     private func accent(_ text: String) -> String {
@@ -42,8 +42,8 @@ public struct PseudoLocalizationProvider: SyncLocalizationProvider {
 public struct PassthroughLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSynchronously(_ text: String) -> String {
-        text
+    public func translateSynchronously(_ request: LocalizationRequest) throws -> LocalizationResponse {
+        LocalizationResponse(localizedText: request.sourceText)
     }
 }
 
@@ -51,11 +51,11 @@ public struct PassthroughLocalizationProvider: SyncLocalizationProvider {
 public struct MockLocalizationProvider: SyncLocalizationProvider {
     public init() {}
 
-    public func translateSynchronously(_ text: String) -> String {
-        let languageIdentifier = currentAppLanguageIdentifier()
+    public func translateSynchronously(_ request: LocalizationRequest) throws -> LocalizationResponse {
+        let languageIdentifier = request.targetLanguageIdentifier ?? currentAppLanguageIdentifier()
         let locale = Locale(identifier: languageIdentifier)
         let languageCode = locale.language.languageCode?.identifier ?? languageIdentifier
-        return "[\(languageCode.uppercased())] \(text)"
+        return LocalizationResponse(localizedText: "[\(languageCode.uppercased())] \(request.sourceText)")
     }
 }
 

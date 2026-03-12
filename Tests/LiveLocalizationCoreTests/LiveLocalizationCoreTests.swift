@@ -78,6 +78,53 @@ struct LiveLocalizationCoreTests {
     }
 
     @Test
+    func localizationRequestAffectsCacheKey() async {
+        let counter = LockedCounter()
+        let localizer = LiveLocalizer(provider: CountingAsyncProvider(counter: counter))
+
+        let first = await localizer.localize(
+            LocalizationRequest(
+                sourceText: "Settings",
+                targetLanguageIdentifier: "ja",
+                context: "settings.title"
+            )
+        )
+        let second = await localizer.localize(
+            LocalizationRequest(
+                sourceText: "Settings",
+                targetLanguageIdentifier: "ja",
+                context: "settings.title"
+            )
+        )
+        let third = await localizer.localize(
+            LocalizationRequest(
+                sourceText: "Settings",
+                targetLanguageIdentifier: "fr",
+                context: "settings.title"
+            )
+        )
+
+        #expect(first == second)
+        #expect(third != second)
+        #expect(await counter.value == 2)
+    }
+
+    @Test
+    func customProviderReceivesTargetLanguageAndContext() async {
+        let localizer = LiveLocalizer(provider: RequestEchoProvider())
+        let request = LocalizationRequest(
+            sourceText: "Checkout",
+            sourceLanguageIdentifier: "en",
+            targetLanguageIdentifier: "ja",
+            context: "paywall.primary_cta"
+        )
+
+        let localized = await localizer.localize(request)
+
+        #expect(localized == "[ja|paywall.primary_cta] Checkout")
+    }
+
+    @Test
     func localizerReportsSyncCapability() async {
         let syncLocalizer = LiveLocalizer(provider: PseudoLocalizationProvider())
         let asyncLocalizer = LiveLocalizer(provider: AsyncOnlyProvider())
@@ -88,8 +135,8 @@ struct LiveLocalizationCoreTests {
 }
 
 private struct AsyncOnlyProvider: LocalizationProvider {
-    func translate(_ text: String) async -> String {
-        "[async] \(text)"
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
+        LocalizationResponse(localizedText: "[async] \(request.sourceText)")
     }
 }
 
@@ -109,8 +156,16 @@ private actor LockedCounter {
 private struct CountingAsyncProvider: LocalizationProvider {
     let counter: LockedCounter
 
-    func translate(_ text: String) async -> String {
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
         let callCount = await counter.increment()
-        return "[async-\(callCount)] \(text)"
+        return LocalizationResponse(localizedText: "[async-\(callCount)] \(request.sourceText)")
+    }
+}
+
+private struct RequestEchoProvider: LocalizationProvider {
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
+        let target = request.targetLanguageIdentifier ?? "nil"
+        let context = request.context ?? "nil"
+        return LocalizationResponse(localizedText: "[\(target)|\(context)] \(request.sourceText)")
     }
 }

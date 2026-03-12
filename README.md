@@ -39,6 +39,47 @@ let localized = await "Settings".localize()
 
 For lightweight development flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
 
+## Create Your Own Provider
+
+Custom providers implement `LocalizationProvider` and receive a `LocalizationRequest`.
+
+```swift
+import LiveLocalizationCore
+
+struct MyTranslationProvider: LocalizationProvider {
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
+        let targetLanguage = request.targetLanguageIdentifier ?? "en"
+        let localizedText = "[\(targetLanguage)] \(request.sourceText)"
+        return LocalizationResponse(localizedText: localizedText)
+    }
+}
+```
+
+Use the shared package flow:
+
+```swift
+await LiveLocalization.configure(provider: MyTranslationProvider())
+let text = await "Settings".localize()
+```
+
+Or pass more request context when you need it:
+
+```swift
+let text = await "Checkout".localize(
+    sourceLanguageIdentifier: "en",
+    targetLanguageIdentifier: "ja",
+    context: "paywall.primary_cta"
+)
+```
+
+Provider guidance:
+
+- Return `request.sourceText` when you want an explicit fallback.
+- Use `targetLanguageIdentifier` and `context` if your backend needs routing or domain-specific prompts.
+- If your provider can answer immediately, prefer `SyncLocalizationProvider`.
+
+See [`docs/ProviderGuide.md`](docs/ProviderGuide.md) for a fuller guide to custom provider design.
+
 ## UI Layer
 
 `LiveLocalizationUI` adds simple view wrappers on top of the core localizer layer.

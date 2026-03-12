@@ -96,9 +96,9 @@ struct LiveLocalizedLabelTests {
 private struct DelayedProvider: LocalizationProvider {
     let delayNanoseconds: UInt64
 
-    func translate(_ text: String) async -> String {
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
         try? await Task.sleep(nanoseconds: delayNanoseconds)
-        return "[localized] \(text)"
+        return LocalizationResponse(localizedText: "[localized] \(request.sourceText)")
     }
 }
 
@@ -114,11 +114,11 @@ private actor LockedDelayCounter {
 private struct SequenceDelayedProvider: LocalizationProvider {
     private let counter = LockedDelayCounter()
 
-    func translate(_ text: String) async -> String {
+    func translate(_ request: LocalizationRequest) async throws -> LocalizationResponse {
         let callIndex = await counter.increment()
         let delayNanoseconds: UInt64 = callIndex == 1 ? 150_000_000 : 30_000_000
         try? await Task.sleep(nanoseconds: delayNanoseconds)
-        return "[localized] \(text)"
+        return LocalizationResponse(localizedText: "[localized] \(request.sourceText)")
     }
 }
 #endif
