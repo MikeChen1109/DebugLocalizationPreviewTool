@@ -1,6 +1,6 @@
 import Foundation
 import Observation
-import DebugLocalizationCore
+import LiveLocalizationCore
 #if canImport(Translation)
 import Translation
 #endif

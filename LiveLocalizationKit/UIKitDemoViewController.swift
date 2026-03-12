@@ -1,5 +1,5 @@
 import UIKit
-import DebugLocalizationCore
+import LiveLocalizationCore
 
 final class UIKitDemoViewController: UIViewController {
     private let englishSourceText = "Delete"

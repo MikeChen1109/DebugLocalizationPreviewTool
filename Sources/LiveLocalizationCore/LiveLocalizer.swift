@@ -1,8 +1,8 @@
 import Foundation
 
-public final class DebugLocalizer: @unchecked Sendable {
-    public static var shared: DebugLocalizer {
-        DebugTranslate.localizer
+public final class LiveLocalizer: @unchecked Sendable {
+    public static var shared: LiveLocalizer {
+        LiveLocalization.localizer
     }
 
     private let provider: any LocalizationProvider

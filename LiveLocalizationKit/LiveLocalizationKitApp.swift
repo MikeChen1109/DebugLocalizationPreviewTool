@@ -1,14 +1,14 @@
 import SwiftUI
-import DebugLocalizationCore
-import DebugLocalizationTranslationSupport
+import LiveLocalizationCore
+import LiveLocalizationTranslationSupport
 
 @main
-struct DebugLocalizationDemoApp: App {
+struct LiveLocalizationKitApp: App {
     private let shouldPresentPreparationGate: Bool
 
     init() {
         shouldPresentPreparationGate = true
-        DebugTranslate.configure(provider: AppleTranslationProvider())
+        LiveLocalization.configure(provider: AppleTranslationProvider())
     }
 
     var body: some Scene {

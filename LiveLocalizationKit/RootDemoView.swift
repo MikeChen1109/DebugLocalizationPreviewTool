@@ -1,5 +1,5 @@
 import SwiftUI
-import DebugLocalizationTranslationSupport
+import LiveLocalizationTranslationSupport
 
 struct RootDemoView: View {
     let shouldPresentPreparationGate: Bool

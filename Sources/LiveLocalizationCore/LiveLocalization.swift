@@ -1,17 +1,17 @@
 import Foundation
 
-public enum DebugTranslate {
+public enum LiveLocalization {
     private static let sharedStore = SharedLocalizerStore()
 
     public static func configure(provider: any LocalizationProvider) {
-        sharedStore.setLocalizer(DebugLocalizer(provider: provider))
+        sharedStore.setLocalizer(LiveLocalizer(provider: provider))
     }
 
-    public static func configure(localizer: DebugLocalizer) {
+    public static func configure(localizer: LiveLocalizer) {
         sharedStore.setLocalizer(localizer)
     }
 
-    public static var localizer: DebugLocalizer {
+    public static var localizer: LiveLocalizer {
         sharedStore.localizer
     }
 
@@ -30,15 +30,15 @@ public enum DebugTranslate {
 
 private final class SharedLocalizerStore: @unchecked Sendable {
     private let lock = NSLock()
-    private var currentLocalizer = DebugLocalizer(provider: PseudoLocalizationProvider())
+    private var currentLocalizer = LiveLocalizer(provider: PseudoLocalizationProvider())
 
-    var localizer: DebugLocalizer {
+    var localizer: LiveLocalizer {
         lock.lock()
         defer { lock.unlock() }
         return currentLocalizer
     }
 
-    func setLocalizer(_ localizer: DebugLocalizer) {
+    func setLocalizer(_ localizer: LiveLocalizer) {
         lock.lock()
         currentLocalizer = localizer
         lock.unlock()

@@ -1,5 +1,5 @@
 import SwiftUI
-import DebugLocalizationCore
+import LiveLocalizationCore
 
 struct UIKitDemoView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UINavigationController {

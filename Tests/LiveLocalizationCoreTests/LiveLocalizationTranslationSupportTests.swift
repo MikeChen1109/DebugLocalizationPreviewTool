@@ -1,15 +1,15 @@
 import Foundation
 import Testing
-@testable import DebugLocalizationTranslationSupport
+@testable import LiveLocalizationTranslationSupport
 
-struct DebugLocalizationTranslationSupportTests {
+struct LiveLocalizationTranslationSupportTests {
     @Test
     func appleTranslationProviderFallsBackToOriginalTextWhenTranslationFails() async {
         let provider = AppleTranslationProvider(
             appLanguageIdentifier: { "zh-Hant" },
             englishLanguageIdentifierChecker: { _ in false },
             preparationResolver: { _ in testPreparation },
-            translationExecutor: { _, _ in throw DebugLocalizationTestError.expectedFailure }
+            translationExecutor: { _, _ in throw LiveLocalizationTestError.expectedFailure }
         )
 
         let localized = await provider.translate("Settings")
@@ -89,7 +89,7 @@ struct DebugLocalizationTranslationSupportTests {
     }
 }
 
-private enum DebugLocalizationTestError: Error {
+private enum LiveLocalizationTestError: Error {
     case expectedFailure
 }
 

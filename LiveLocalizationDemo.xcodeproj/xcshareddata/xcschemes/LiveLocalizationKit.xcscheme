@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9464506C2F5F665E00F1661D"
-               BuildableName = "DebugLocalizationDemo.app"
-               BlueprintName = "DebugLocalizationDemo"
-               ReferencedContainer = "container:DebugLocalizationDemo.xcodeproj">
+               BuildableName = "LiveLocalizationKit.app"
+               BlueprintName = "LiveLocalizationKit"
+               ReferencedContainer = "container:LiveLocalizationDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = "ko"
-      region = "TW"
+      language = "zh-Hant"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -47,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9464506C2F5F665E00F1661D"
-            BuildableName = "DebugLocalizationDemo.app"
-            BlueprintName = "DebugLocalizationDemo"
-            ReferencedContainer = "container:DebugLocalizationDemo.xcodeproj">
+            BuildableName = "LiveLocalizationKit.app"
+            BlueprintName = "LiveLocalizationKit"
+            ReferencedContainer = "container:LiveLocalizationDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -64,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9464506C2F5F665E00F1661D"
-            BuildableName = "DebugLocalizationDemo.app"
-            BlueprintName = "DebugLocalizationDemo"
-            ReferencedContainer = "container:DebugLocalizationDemo.xcodeproj">
+            BuildableName = "LiveLocalizationKit.app"
+            BlueprintName = "LiveLocalizationKit"
+            ReferencedContainer = "container:LiveLocalizationDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -3,34 +3,34 @@
 import PackageDescription
 
 let package = Package(
-    name: "DebugLocalization",
+    name: "LiveLocalizationKit",
     platforms: [
         .iOS(.v26),
         .macOS(.v15)
     ],
     products: [
         .library(
-            name: "DebugLocalizationCore",
-            targets: ["DebugLocalizationCore"]
+            name: "LiveLocalizationCore",
+            targets: ["LiveLocalizationCore"]
         ),
         .library(
-            name: "DebugLocalizationTranslationSupport",
-            targets: ["DebugLocalizationTranslationSupport"]
+            name: "LiveLocalizationTranslationSupport",
+            targets: ["LiveLocalizationTranslationSupport"]
         )
     ],
     targets: [
         .target(
-            name: "DebugLocalizationCore"
+            name: "LiveLocalizationCore"
         ),
         .target(
-            name: "DebugLocalizationTranslationSupport",
-            dependencies: ["DebugLocalizationCore"]
+            name: "LiveLocalizationTranslationSupport",
+            dependencies: ["LiveLocalizationCore"]
         ),
         .testTarget(
-            name: "DebugLocalizationCoreTests",
+            name: "LiveLocalizationCoreTests",
             dependencies: [
-                "DebugLocalizationCore",
-                "DebugLocalizationTranslationSupport"
+                "LiveLocalizationCore",
+                "LiveLocalizationTranslationSupport"
             ]
         )
     ]

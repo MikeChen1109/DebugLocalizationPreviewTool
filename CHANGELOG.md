@@ -6,6 +6,11 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+### Changed
+- Renamed the package surface from `DebugLocalization` to `LiveLocalizationKit`.
+- Renamed primary modules to `LiveLocalizationCore` and `LiveLocalizationTranslationSupport`.
+- Renamed the shared runtime API to `LiveLocalization`, `LiveLocalizer`, `LiveLocalizationError`, and `LiveLocalizationVersion`.
+
 ## [0.3.0] - 2026-03-11
 
 ### Added

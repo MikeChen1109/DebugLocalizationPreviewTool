@@ -1,5 +1,5 @@
 import SwiftUI
-import DebugLocalizationCore
+import LiveLocalizationCore
 
 struct ContentView: View {
     private let englishSourceText = "Payment successful"

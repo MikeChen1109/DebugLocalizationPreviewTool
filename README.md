@@ -1,4 +1,4 @@
-# Debug Localization Preview Tool
+# LiveLocalizationKit
 
 A Swift Package for previewing multilingual UI during development.
 
@@ -20,22 +20,22 @@ https://github.com/MikeChen1109/DebugLocalizationPreviewTool.git
 
 Available products:
 
-- `DebugLocalizationCore`
-- `DebugLocalizationTranslationSupport`
+- `LiveLocalizationCore`
+- `LiveLocalizationTranslationSupport`
 
 ## Quick Start
 
 Configure Apple Translation-based preview:
 
 ```swift
-import DebugLocalizationCore
-import DebugLocalizationTranslationSupport
+import LiveLocalizationCore
+import LiveLocalizationTranslationSupport
 
-DebugTranslate.configure(provider: AppleTranslationProvider())
+LiveLocalization.configure(provider: AppleTranslationProvider())
 let localized = await "Settings".localize()
 ```
 
-For lightweight debug-only flows, `DebugLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
+For lightweight debug-only flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
 
 ## Apple Translation Preview
 
@@ -43,7 +43,7 @@ If you want a debug flow that checks whether required language packs are availab
 
 ```swift
 import SwiftUI
-import DebugLocalizationTranslationSupport
+import LiveLocalizationTranslationSupport
 
 TranslationPreparationGate {
     ContentView()

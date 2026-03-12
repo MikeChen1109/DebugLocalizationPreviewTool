@@ -1,6 +1,6 @@
 import Foundation
 
-/// A pluggable translation backend used by `DebugLocalizer` and `DebugTranslate`.
+/// A pluggable translation backend used by `LiveLocalizer` and `LiveLocalization`.
 public protocol LocalizationProvider: Sendable {
     func translate(_ text: String) async -> String
 }
@@ -16,7 +16,7 @@ public extension SyncLocalizationProvider {
     }
 }
 
-public enum DebugLocalizationError: Error {
+public enum LiveLocalizationError: Error {
     case emptyText
     case unsupportedTargetLanguage
     case notSupportedOnPlatform

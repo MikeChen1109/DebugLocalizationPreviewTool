@@ -1,13 +1,13 @@
 //
-//  DebugLocalizationDemoUITests.swift
-//  DebugLocalizationDemoUITests
+//  LiveLocalizationKitUITests.swift
+//  LiveLocalizationKitUITests
 //
 //  Created by Mike Chen on 2026/3/10.
 //
 
 import XCTest
 
-final class DebugLocalizationDemoUITests: XCTestCase {
+final class LiveLocalizationKitUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

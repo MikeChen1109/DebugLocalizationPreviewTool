@@ -1,5 +1,5 @@
 import Foundation
-import DebugLocalizationCore
+import LiveLocalizationCore
 #if canImport(Translation)
 import Translation
 #endif
@@ -42,7 +42,7 @@ public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendabl
         }
 #endif
         return { _, _ in
-            throw DebugLocalizationError.notSupportedOnPlatform
+            throw LiveLocalizationError.notSupportedOnPlatform
         }
     }
 
@@ -65,15 +65,15 @@ public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendabl
 #if canImport(Translation)
         if #available(iOS 18.0, *) {
             guard let preparation = await preparationResolver(languageIdentifier) else {
-                throw DebugLocalizationError.unsupportedTargetLanguage
+                throw LiveLocalizationError.unsupportedTargetLanguage
             }
 
             return try await translationExecutor(text, preparation)
         } else {
-            throw DebugLocalizationError.notSupportedOnPlatform
+            throw LiveLocalizationError.notSupportedOnPlatform
         }
 #else
-        throw DebugLocalizationError.notSupportedOnPlatform
+        throw LiveLocalizationError.notSupportedOnPlatform
 #endif
     }
 
@@ -145,7 +145,7 @@ public struct AppleTranslationProvider: LocalizationProvider, @unchecked Sendabl
             let response = try await session.translate(text)
             return response.targetText
         } catch {
-            throw DebugLocalizationError.translationFailed(underlying: error)
+            throw LiveLocalizationError.translationFailed(underlying: error)
         }
     }
 #endif

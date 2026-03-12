@@ -1,9 +1,9 @@
 import Foundation
 import Testing
-@testable import DebugLocalizationCore
+@testable import LiveLocalizationCore
 
 @Suite(.serialized)
-struct DebugLocalizationCoreTests {
+struct LiveLocalizationCoreTests {
     @Test
     func pseudoLocalizationExpandsText() async throws {
         let provider = PseudoLocalizationProvider()
@@ -17,12 +17,12 @@ struct DebugLocalizationCoreTests {
 
     @Test
     func stringExtensionUsesConfiguredSharedLocalizer() async {
-        defer { DebugTranslate.reset() }
+        defer { LiveLocalization.reset() }
 
-        DebugTranslate.configure(provider: PassthroughLocalizationProvider())
+        LiveLocalization.configure(provider: PassthroughLocalizationProvider())
         let passthrough = await "Settings".localize()
 
-        DebugTranslate.configure(provider: PseudoLocalizationProvider())
+        LiveLocalization.configure(provider: PseudoLocalizationProvider())
         let pseudoLocalized = await "Settings".localize()
 
         #expect(passthrough == "Settings")
@@ -31,9 +31,9 @@ struct DebugLocalizationCoreTests {
 
     @Test
     func syncLocalizationUsesSyncCapableProvider() {
-        defer { DebugTranslate.reset() }
+        defer { LiveLocalization.reset() }
 
-        DebugTranslate.configure(provider: MockLocalizationProvider())
+        LiveLocalization.configure(provider: MockLocalizationProvider())
 
         let localized = "Settings".localizeSync()
 
@@ -42,14 +42,14 @@ struct DebugLocalizationCoreTests {
 
     @Test
     func syncLocalizationFallsBackToOriginalTextForAsyncOnlyProvider() {
-        let localizer = DebugLocalizer(provider: AsyncOnlyProvider())
+        let localizer = LiveLocalizer(provider: AsyncOnlyProvider())
 
         #expect(localizer.localizeSync("Settings") == "Settings")
     }
 
     @Test
     func asyncLocalizationUsesAsyncOnlyProvider() async {
-        let localizer = DebugLocalizer(provider: AsyncOnlyProvider())
+        let localizer = LiveLocalizer(provider: AsyncOnlyProvider())
 
         let localized = await localizer.localize("Settings")
 
@@ -59,7 +59,7 @@ struct DebugLocalizationCoreTests {
     @Test
     func asyncLocalizationCachesAsyncProviderResults() async {
         let counter = LockedCounter()
-        let localizer = DebugLocalizer(provider: CountingAsyncProvider(counter: counter))
+        let localizer = LiveLocalizer(provider: CountingAsyncProvider(counter: counter))
 
         let first = await localizer.localize("Settings")
         let second = await localizer.localize("Settings")
@@ -71,8 +71,8 @@ struct DebugLocalizationCoreTests {
 
     @Test
     func localizerReportsSyncCapability() {
-        let syncLocalizer = DebugLocalizer(provider: PseudoLocalizationProvider())
-        let asyncLocalizer = DebugLocalizer(provider: AsyncOnlyProvider())
+        let syncLocalizer = LiveLocalizer(provider: PseudoLocalizationProvider())
+        let asyncLocalizer = LiveLocalizer(provider: AsyncOnlyProvider())
 
         #expect(syncLocalizer.canLocalizeSynchronously)
         #expect(!asyncLocalizer.canLocalizeSynchronously)
