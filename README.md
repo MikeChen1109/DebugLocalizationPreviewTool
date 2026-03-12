@@ -25,16 +25,7 @@ Available products:
 
 ## Quick Start
 
-Configure a provider once:
-
-```swift
-import DebugLocalizationCore
-
-DebugTranslate.configure(provider: PseudoLocalizationProvider())
-let localized = await "Settings".localize()
-```
-
-If you want Apple Translation-based preview:
+Configure Apple Translation-based preview:
 
 ```swift
 import DebugLocalizationCore
@@ -43,6 +34,8 @@ import DebugLocalizationTranslationSupport
 DebugTranslate.configure(provider: AppleTranslationProvider())
 let localized = await "Settings".localize()
 ```
+
+For lightweight debug-only flows, `DebugLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
 
 ## Apple Translation Preview
 
