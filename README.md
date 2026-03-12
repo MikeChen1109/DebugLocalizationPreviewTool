@@ -1,21 +1,22 @@
 # LiveLocalizationKit
 
-A Swift Package for previewing multilingual UI during development.
+A Swift Package that helps small teams and indie developers ship multilingual apps faster.
 
-Use it to quickly render SwiftUI or UIKit screens in other languages, catch truncation and layout issues early, and reduce the setup cost of using Apple Translation in debug builds.
+Use it to add localization workflows to SwiftUI and UIKit projects with lightweight preview, pseudo-localization, and Apple Translation-based support so you can validate UI earlier and reduce the overhead of rolling out multiple languages.
 
 ## Best For
 
-- debug-only localization preview
+- development-time localization preview
 - UI layout validation across languages
-- rapid iteration before formal localization QA
+- pseudo-localization and mock translation flows
+- Apple Translation preparation and live translation testing before formal localization QA
 
 ## Swift Package Manager
 
 Add this repository in Xcode:
 
 ```text
-https://github.com/MikeChen1109/DebugLocalizationPreviewTool.git
+https://github.com/MikeChen1109/LiveLocalizationKit.git
 ```
 
 Available products:
@@ -35,7 +36,7 @@ LiveLocalization.configure(provider: AppleTranslationProvider())
 let localized = await "Settings".localize()
 ```
 
-For lightweight debug-only flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
+For lightweight development flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
 
 ## Apple Translation Preview
 
@@ -62,7 +63,7 @@ If language pack download appears stuck in-app, managing the pack first in Apple
 
 ## Demo App
 
-See the example project in `DebugLocalizationDemo/` for a simple preview setup covering both SwiftUI and UIKit.
+See `LiveLocalizationDemo.xcodeproj` for the bundled demo app. The demo sources live under `LiveLocalizationKit/` and cover both SwiftUI and UIKit preview flows.
 
 ## License
 
