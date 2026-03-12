@@ -1,15 +1,19 @@
 # LiveLocalizationKit
 
-A Swift Package that helps small teams and indie developers ship multilingual SwiftUI and UIKit apps faster.
+A Swift Package that helps small teams and indie developers add multilingual support to SwiftUI and UIKit apps faster.
 
-It provides development-friendly localization workflows, including pseudo-localization and a built-in Apple Translation provider today, with a provider-based design that can be extended to support custom translation APIs.
+It provides a provider-based localization stack with built-in Apple Translation support, UI-ready wrappers, and configurable caching for runtime localization flows and custom translation backends.
 
-## Best For
+## Features
 
-- development-time localization preview
-- UI layout validation across languages
-- pseudo-localization and mock translation flows
-- Apple Translation preparation and live translation testing before formal localization QA
+- runtime localization for SwiftUI and UIKit apps
+- provider-based architecture for custom translation backends
+- built-in Apple Translation support
+- SwiftUI `LiveLocalizedText` and UIKit `LiveLocalizedLabel`
+- in-memory and disk-backed cache stores
+- configurable cache policy with namespacing, provider segmentation, and TTL
+- pseudo-localization, passthrough, and mock translation providers
+- shared localizer configuration and explicit localizer injection
 
 ## Swift Package Manager
 
@@ -43,6 +47,8 @@ await LiveLocalization.configure(
 )
 let localized = await "Settings".localize()
 ```
+
+`LiveLocalization.configure(...)` is async because shared configuration can prewarm injected cache stores such as `DiskLocalizationCacheStore` before your UI starts reading localized content.
 
 For lightweight development flows, `LiveLocalizationCore` also includes providers such as `PseudoLocalizationProvider`, `MockLocalizationProvider`, and `PassthroughLocalizationProvider`.
 
@@ -78,7 +84,12 @@ Or create an explicit localizer with a custom cache store:
 ```swift
 let localizer = LiveLocalizer(
     provider: MyTranslationProvider(),
-    cacheStore: DiskLocalizationCacheStore()
+    cacheStore: DiskLocalizationCacheStore(),
+    cachePolicy: LocalizationCachePolicy(
+        namespace: "preview",
+        providerIdentifier: "my-provider",
+        entryLifetime: 3600
+    )
 )
 let text = await "Checkout".localize(using: localizer)
 ```
@@ -108,6 +119,7 @@ See [`docs/ProviderGuide.md`](docs/ProviderGuide.md) for a fuller guide to custo
 - `MemoryLocalizationCacheStore` keeps results in memory for the current process.
 - `DiskLocalizationCacheStore` persists localized text to disk across launches.
 - `LocalizationCachePolicy` supports namespacing, provider-aware segmentation, and TTL-based expiration.
+- Shared `LiveLocalization.configure(...)` can prewarm an injected cache store before the shared localizer is published.
 
 ```swift
 let localizer = LiveLocalizer(
