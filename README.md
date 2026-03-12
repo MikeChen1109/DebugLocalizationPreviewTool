@@ -1,8 +1,8 @@
 # LiveLocalizationKit
 
-A Swift Package that helps small teams and indie developers ship multilingual apps faster.
+A Swift Package that helps small teams and indie developers ship multilingual SwiftUI and UIKit apps faster.
 
-Use it to add localization workflows to SwiftUI and UIKit projects with lightweight preview, pseudo-localization, and Apple Translation-based support so you can validate UI earlier and reduce the overhead of rolling out multiple languages.
+It provides development-friendly localization workflows, including pseudo-localization and a built-in Apple Translation provider today, with a provider-based design that can be extended to support custom translation APIs.
 
 ## Best For
 
