@@ -6,6 +6,21 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-03-13
+
+### Added
+- Added pluggable cache store support with `MemoryLocalizationCacheStore` and `DiskLocalizationCacheStore`.
+- Added `LocalizationCachePolicy` for namespacing, provider-aware cache segmentation, and TTL-based expiration.
+- Added cache prewarming during shared configuration for persistent cache stores.
+- Added `LocalizationEvent`, `LocalizationLogger`, and `ClosureLocalizationLogger` for runtime observability.
+- Added a demo event log tab to inspect shared configuration, cache, and provider activity.
+- Added provider documentation for custom backends, cache configuration, and observability hooks.
+
+### Changed
+- Expanded `LiveLocalization.configure(...)` to accept cache store, cache policy, and logger injection.
+- Refined package platform support to `iOS 18` and `macOS 15` while keeping `AppleTranslationProvider` gated to `iOS 26` and `macOS 26`.
+- Updated README and demo content to reflect runtime localization flows, configurable caching, and observability features.
+
 ## [0.4.0] - 2026-03-13
 
 ### Added

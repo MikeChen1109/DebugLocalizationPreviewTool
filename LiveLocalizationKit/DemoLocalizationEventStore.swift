@@ -1,13 +1,21 @@
 import Foundation
 import LiveLocalizationCore
 
+struct DemoLocalizationEventEntry: Identifiable, Sendable, Hashable {
+    let id: UUID
+    let message: String
+}
+
 actor DemoLocalizationEventStore {
     private let entryLimit = 50
-    private var entries: [String] = []
-    private var continuations: [UUID: AsyncStream<[String]>.Continuation] = [:]
+    private var entries: [DemoLocalizationEventEntry] = []
+    private var continuations: [UUID: AsyncStream<[DemoLocalizationEventEntry]>.Continuation] = [:]
 
     func record(_ event: LocalizationEvent) {
-        entries.insert(Self.description(for: event), at: 0)
+        entries.insert(
+            DemoLocalizationEventEntry(id: UUID(), message: Self.description(for: event)),
+            at: 0
+        )
         if entries.count > entryLimit {
             entries.removeLast(entries.count - entryLimit)
         }
@@ -18,7 +26,7 @@ actor DemoLocalizationEventStore {
         }
     }
 
-    func snapshots() -> AsyncStream<[String]> {
+    func snapshots() -> AsyncStream<[DemoLocalizationEventEntry]> {
         AsyncStream { continuation in
             let id = UUID()
             continuations[id] = continuation

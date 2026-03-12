@@ -3,7 +3,7 @@ import SwiftUI
 struct LocalizationEventLogView: View {
     let eventStore: DemoLocalizationEventStore
 
-    @State private var entries: [String] = []
+    @State private var entries: [DemoLocalizationEventEntry] = []
 
     var body: some View {
         NavigationStack {
@@ -15,8 +15,8 @@ struct LocalizationEventLogView: View {
                         description: Text("Run the SwiftUI or UIKit demos to generate localization events.")
                     )
                 } else {
-                    List(entries, id: \.self) { entry in
-                        Text(entry)
+                    List(entries) { entry in
+                        Text(entry.message)
                             .font(.footnote.monospaced())
                             .textSelection(.enabled)
                     }
