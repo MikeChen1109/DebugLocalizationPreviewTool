@@ -6,6 +6,25 @@ The format is based on Keep a Changelog, and this project follows Semantic Versi
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-03-13
+
+### Added
+- Added `LiveLocalizationPhase` as the shared UI-layer state model for loading and loaded text.
+- Added `LiveLocalizationCompletion` for completion callbacks from SwiftUI and UIKit wrappers.
+- Added SwiftUI `LiveLocalizedText.placeholder { ... }` for loading-time placeholder presentation.
+- Added SwiftUI `LiveLocalizedText.onProgress(...)` and `LiveLocalizedText.onCompletion(...)`.
+- Added UIKit `LiveLocalizedLabel` progress and completion handlers, including the current label instance in callbacks.
+
+### Changed
+- Simplified `LiveLocalizedText` to use a default text presentation and event-driven customization instead of custom content rendering.
+- Updated `LiveLocalizedLabel` to stay blank while loading instead of showing the source string first.
+- Updated the demo app to showcase multiline wrapper content, loading placeholders, and progress/completion-driven UI updates.
+- Updated README examples to reflect the current UI wrapper customization model.
+
+### Removed
+- Removed `LiveLocalizationTextAnimation` and the public animation configuration surface from UI wrappers.
+- Removed the previous SwiftUI and UIKit animation customization flow in favor of placeholder/progress/completion APIs.
+
 ## [0.5.0] - 2026-03-13
 
 ### Added

@@ -5,18 +5,11 @@ import Testing
 
 struct LiveLocalizationUITests {
     @Test
-    func requestCoordinatorInvalidatesOlderRequests() async {
-        let coordinator = LiveLocalizationTextRequestCoordinator()
-
-        let firstRequest = await coordinator.beginRequest()
-        let secondRequest = await coordinator.beginRequest()
-
-        #expect(await !coordinator.isCurrent(firstRequest))
-        #expect(await coordinator.isCurrent(secondRequest))
-
-        await coordinator.invalidateCurrentRequest()
-
-        #expect(await !coordinator.isCurrent(secondRequest))
+    func liveLocalizationPhaseExposesDisplayTextAndLoadingState() {
+        #expect(LiveLocalizationPhase.idle(source: "Profile").displayedText == "Profile")
+        #expect(LiveLocalizationPhase.loading(source: "Profile").isLoading)
+        #expect(LiveLocalizationPhase.loaded(text: "Profil").displayedText == "Profil")
+        #expect(!LiveLocalizationPhase.loaded(text: "Profil").isLoading)
     }
 
     @Test
@@ -47,19 +40,20 @@ import UIKit
 struct LiveLocalizedLabelTests {
     @Test
     @MainActor
-    func labelShowsSourceImmediatelyAndCommitsLatestLocalizedText() async throws {
+    func labelStaysBlankWhileLoadingAndCommitsLatestLocalizedText() async throws {
         let localizer = LiveLocalizer(provider: DelayedProvider(delayNanoseconds: 50_000_000))
         let label = LiveLocalizedLabel()
         label.localizer = localizer
-        label.animationStyle = .none
 
         label.setLocalizedText("Profile")
 
-        #expect(label.text == "Profile")
+        #expect(label.text == nil)
+        #expect(label.phase == .loading(source: "Profile"))
 
-        try await Task.sleep(nanoseconds: 120_000_000)
+        try await Task.sleep(nanoseconds: 1_200_000_000)
 
         #expect(label.text == "[localized] Profile")
+        #expect(label.phase == .loaded(text: "[localized] Profile"))
     }
 
     @Test
@@ -70,14 +64,16 @@ struct LiveLocalizedLabelTests {
 
         let label = LiveLocalizedLabel()
         label.localizer = localizer
-        label.animationStyle = .none
 
         label.setLocalizedText("Profile")
 
-        try await Task.sleep(nanoseconds: 50_000_000)
+        #expect(label.text == nil)
+
+        try await Task.sleep(nanoseconds: 1_200_000_000)
 
         #expect(label.text?.contains("Profile") == true)
         #expect(label.text != "Profile")
+        #expect(label.phase == .loaded(text: label.text ?? ""))
     }
 
     @Test
@@ -86,14 +82,64 @@ struct LiveLocalizedLabelTests {
         let localizer = LiveLocalizer(provider: SequenceDelayedProvider())
         let label = LiveLocalizedLabel()
         label.localizer = localizer
-        label.animationStyle = .none
 
         label.setLocalizedText("First")
         label.setLocalizedText("Second")
 
-        try await Task.sleep(nanoseconds: 220_000_000)
+        #expect(label.text == nil)
+
+        try await Task.sleep(nanoseconds: 1_300_000_000)
 
         #expect(label.text == "[localized] Second")
+    }
+
+    @Test
+    @MainActor
+    func labelProgressHandlerReceivesPhaseChanges() async throws {
+        let localizer = LiveLocalizer(provider: DelayedProvider(delayNanoseconds: 50_000_000))
+        let label = LiveLocalizedLabel()
+        label.localizer = localizer
+
+        var phases: [LiveLocalizationPhase] = []
+        label.progressHandler = { reportedLabel, phase in
+            #expect(reportedLabel === label)
+            phases.append(phase)
+        }
+
+        label.setLocalizedText("Profile")
+
+        try await Task.sleep(nanoseconds: 1_200_000_000)
+
+        #expect(phases == [
+            .loading(source: "Profile"),
+            .loaded(text: "[localized] Profile")
+        ])
+    }
+
+    @Test
+    @MainActor
+    func labelCompletionHandlerReceivesLocalizedText() async throws {
+        let localizer = LiveLocalizer(provider: DelayedProvider(delayNanoseconds: 50_000_000))
+        let label = LiveLocalizedLabel()
+        label.localizer = localizer
+
+        var completion: LiveLocalizationCompletion?
+
+        label.setLocalizedText(
+            "Profile",
+            progressHandler: { _, _ in },
+            completionHandler: { reportedLabel, result in
+                #expect(reportedLabel === label)
+                completion = result
+            }
+        )
+
+        try await Task.sleep(nanoseconds: 1_200_000_000)
+
+        #expect(completion == LiveLocalizationCompletion(
+            source: "Profile",
+            localizedText: "[localized] Profile"
+        ))
     }
 }
 

@@ -10,6 +10,7 @@ It provides a provider-based localization stack with built-in Apple Translation 
 - provider-based architecture for custom translation backends
 - built-in Apple Translation support
 - SwiftUI `LiveLocalizedText` and UIKit `LiveLocalizedLabel`
+- loading placeholders, progress callbacks, and completion callbacks for UI wrappers
 - in-memory and disk-backed cache stores
 - configurable cache policy with namespacing, provider segmentation, and TTL
 - pseudo-localization, passthrough, and mock translation providers
@@ -168,6 +169,16 @@ import SwiftUI
 import LiveLocalizationUI
 
 LiveLocalizedText("Continue")
+    .placeholder { phase in
+        Text(phase.displayedText)
+            .redacted(reason: .placeholder)
+    }
+    .onProgress { phase in
+        print("phase:", phase)
+    }
+    .onCompletion { completion in
+        print("localized:", completion.localizedText)
+    }
 ```
 
 UIKit:
@@ -177,8 +188,21 @@ import UIKit
 import LiveLocalizationUI
 
 let label = LiveLocalizedLabel()
-label.setLocalizedText("Continue")
+label.setLocalizedText(
+    "Continue",
+    progressHandler: { label, phase in
+        print(label, phase)
+    },
+    completionHandler: { label, completion in
+        print(label, completion.localizedText)
+    }
+)
 ```
+
+Notes:
+
+- `LiveLocalizedText` now keeps UI customization separate from event callbacks: use `placeholder { ... }` for loading presentation and `onProgress` / `onCompletion` for side effects.
+- `LiveLocalizedLabel` starts blank while loading and reports progress and completion through handler-based callbacks.
 
 ## Apple Translation Preview
 

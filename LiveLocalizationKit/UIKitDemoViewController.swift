@@ -4,7 +4,10 @@ import LiveLocalizationUI
 
 final class UIKitDemoViewController: UIViewController {
     private let coreSourceText = "Delete"
-    private let wrapperSourceText = "Continue"
+    private let wrapperSourceText = """
+    Continue on the next line
+    and review the updated settings
+    """
 
     private let coreTitleLabel: UILabel = {
         let label = UILabel()
@@ -40,9 +43,15 @@ final class UIKitDemoViewController: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .title2)
-        label.animationStyle = .softFade
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    private let wrapperLoadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
 
     @available(*, unavailable)
@@ -62,7 +71,8 @@ final class UIKitDemoViewController: UIViewController {
             coreTitleLabel,
             coreLabel,
             wrapperTitleLabel,
-            wrapperLabel
+            wrapperLabel,
+            wrapperLoadingIndicator
         ])
         stackView.axis = .vertical
         stackView.spacing = 12
@@ -83,7 +93,17 @@ final class UIKitDemoViewController: UIViewController {
                 self.coreLabel.text = localized
             }
         }
+        wrapperLabel.setLocalizedText(
+            wrapperSourceText,
+            progressHandler: { [weak self] _, phase in
+                guard let self else { return }
 
-        wrapperLabel.setLocalizedText(wrapperSourceText)
+                if phase.isLoading {
+                    self.wrapperLoadingIndicator.startAnimating()
+                } else {
+                    self.wrapperLoadingIndicator.stopAnimating()
+                }
+            }
+        )
     }
 }
